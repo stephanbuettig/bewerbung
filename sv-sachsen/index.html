@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Stephan Büttig · KI-Engineer für die SV Sachsen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;700;800&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+
+/* B · Operating System. Hell, Communardo-Hellblau als Fläche, Navy als Schrift, Module wie eine Statuskonsole. */
+:root{--bg:#f6f6f6;--bg-2:#fff;--fg:#1d1d1d;--muted:#636363;--line:rgba(29,29,29,.14);--sky:#1d1d1d;--lane:#d40000;--signal:#890010;--panel:#ffe3e3;--paper:#fff;--paper-fg:#1d1d1d;--paper-muted:#636363;--paper-line:#e2e2e2;--docs-bg:#efefef;--docs-line:#d6d6d6;--docs-accent:#d40000;--deck-bg:#1d1d1d;--deck-fg:#fff;--deck-muted:#bfbfbf;--deck-accent:#ff4949;--deck-em:#ff6d6d;--deck-line:rgba(255,255,255,.25);--deck-wash:linear-gradient(180deg,rgba(29,29,29,.2),rgba(29,29,29,.75) 50%,rgba(29,29,29,.95));--display:"Inter Tight","Segoe UI",Arial,sans-serif;--body:"Inter","Segoe UI",Helvetica,Arial,sans-serif;--mono:"JetBrains Mono",Menlo,Consolas,monospace;color-scheme:light}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+a{color:var(--lane)}h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.08}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--lane)}
+.bar{position:sticky;top:0;z-index:20;background:rgba(243,248,253,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;min-height:56px}
+.bar nav{display:flex;gap:16px;justify-content:center;white-space:nowrap;overflow:hidden}@media (max-width:1400px){.bar nav{display:none}}
+.bar nav a{color:var(--muted);text-decoration:none;font-size:14px}.bar nav a:hover{color:var(--fg)}
+.bar .cta{flex-wrap:nowrap;justify-content:flex-end}@media (max-width:760px){.bar .wrap{grid-template-columns:1fr;gap:8px;padding-block:8px}.bar .cta{flex-wrap:wrap;justify-content:flex-start}}
+.brand{font-family:var(--mono);font-weight:700;font-size:14px}.brand i{font-style:normal;color:var(--signal);margin-right:6px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--fg);color:var(--fg);background:transparent;border-radius:3px;padding:8px 14px;font:500 14px var(--body);cursor:pointer;text-decoration:none}
+.btn:hover,.btn:focus-visible{background:var(--fg);color:#fff;outline:none}.btn.solid{background:var(--fg);color:#fff}.btn.solid:hover{background:var(--lane)}
+.langswitch button[aria-pressed="true"]{background:var(--fg);color:#fff}
+.cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hero{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fff,var(--bg))}
+.hero .wrap{padding-block:clamp(48px,8vw,96px) clamp(40px,6vw,72px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:48px;align-items:center}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(38px,5.6vw,68px);font-weight:900;max-width:15ch;letter-spacing:-.02em}.hero h1 em{font-style:normal;color:var(--lane)}
+.hero p.lead{font-size:clamp(17px,1.9vw,20px);max-width:56ch;margin:18px 0 0;color:#2b3160}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:20px}.hero .meta b{color:var(--fg);font-weight:500}
+.hero .cta{margin-top:24px}
+.reveal{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}.js .reveal.pending{opacity:0;transform:translateY(12px)}
+/* Konsole */
+.console{background:var(--fg);color:#d5edff;border-radius:8px;padding:18px 20px;font-family:var(--mono);font-size:13px;line-height:1.6;box-shadow:0 30px 60px rgba(4,4,64,.18);min-height:300px}
+.console .top{display:flex;gap:8px;align-items:center;color:#9ea9d4;border-bottom:1px solid rgba(213,237,255,.15);padding-bottom:10px;margin-bottom:12px;font-size:12px}
+.console .top i{width:9px;height:9px;border-radius:50%;background:#e30613;display:inline-block}.console .top i+i{background:#7cc4ff}.console .top i+i+i{background:#d5edff}
+.console .ln{display:grid;grid-template-columns:22px 150px 1fr 70px;gap:10px;align-items:baseline;opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .35s}
+.console .ln.on{opacity:1;transform:none}
+.console .ln .mod{color:#fff}.console .ln .st{text-align:right;color:#7cc4ff}.console .ln.ok .st{color:#7cf2c4}.console .ln .bar2{height:6px;background:rgba(213,237,255,.15);border-radius:99px;overflow:hidden;align-self:center}.console .ln .bar2 i{display:block;height:100%;width:0;background:#7cc4ff;transition:width 1s ease}
+.console .ln.ok .bar2 i{width:100%;background:#7cf2c4}
+.console .ln .pr{color:#7cc4ff}
+.console .foot{margin-top:14px;color:#9ea9d4;font-size:12px}.console .foot b{color:#fff;font-weight:500}
+.console .ln>*{min-width:0;overflow-wrap:anywhere}
+@media (max-width:640px){.console{padding:14px}.console .ln{grid-template-columns:18px minmax(0,1fr) 54px;gap:6px}.console .ln .bar2{display:none}}
+section.block{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--line)}
+section.block h2{font-size:clamp(28px,4vw,44px);font-weight:900;margin-top:10px;max-width:24ch;letter-spacing:-.02em}
+.intro{max-width:64ch;color:#2b3160;margin:18px 0 0}
+/* Module statt Zeilen */
+.missions{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:36px;counter-reset:mod}
+.mission{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;display:grid;gap:12px;position:relative;counter-increment:mod}
+.mission::before{content:"module 0" counter(mod);font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lane)}
+.mission .ask{font-family:var(--display);font-weight:700;font-size:19px;line-height:1.2}
+.mission .ask small{display:block;font:12px var(--mono);color:var(--muted);margin-top:6px;text-transform:none;letter-spacing:0}
+.mission .door{height:4px;background:var(--panel);border-radius:99px;overflow:hidden}
+.mission .door svg{display:none}.mission .door::after{content:"";display:block;height:100%;width:0;background:var(--lane);transition:width 1.2s ease .2s}
+.mission.in .door::after{width:100%}
+.mission .have{color:#2b3160;font-size:15px}.mission .have b{color:var(--fg)}
+.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.req>div{background:var(--panel);border-radius:8px;padding:18px 20px;display:grid;gap:6px;align-content:start}
+.req h3{font-size:17px;font-weight:700}.req p{margin:0;font-size:14.5px;color:#2b3160}.req .q{font:11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--lane)}
+.gov{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:36px}
+.gov article{background:#fff;border:1px solid var(--line);border-left:4px solid var(--lane);border-radius:8px;padding:20px;display:grid;gap:8px;opacity:1;transition:transform .5s}
+.gov article:last-child{border-left-color:var(--signal)}
+.gov .k{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lane)}.gov h3{font-size:19px;font-weight:700}.gov p{margin:0;font-size:15px;color:#2b3160}
+/* Changelog */
+.river{margin-top:36px}.river svg.path{display:none}
+.stations{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+.station{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:18px 20px;border-top:1px solid var(--line)}
+.station:first-child{border-top:0}.station.now{background:var(--panel)}
+.station .when{font-family:var(--mono);font-size:13px;color:var(--lane);padding-top:4px;white-space:nowrap}
+.station h3{font-size:18px;font-weight:700}.station .org{color:var(--muted);font-size:14px;margin:2px 0 6px}.station p{margin:0;color:#2b3160;max-width:66ch;font-size:15px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tag{font:12px var(--mono);border:1px solid var(--line);border-radius:3px;padding:2px 7px;color:var(--muted);background:#fff}.tag.hot{border-color:var(--lane);color:var(--lane)}
+@media (max-width:640px){.station{grid-template-columns:1fr;gap:4px}}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:36px}
+.step{background:#fff;border:1px solid var(--line);border-radius:8px;padding:20px;display:grid;gap:10px;align-content:start}
+.step .k{font:500 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lane)}.step h3{font-size:20px;font-weight:700}
+.step ul{margin:0;padding-left:18px;color:#2b3160;font-size:15px}.step li{margin:4px 0}
+.note{margin-top:22px;font-size:14px;color:var(--muted);max-width:70ch}
+.docs{border-top:1px solid var(--docs-line)}
+@media (prefers-reduced-motion:reduce){.reveal,.console .ln,.mission .door::after{transition:none}.js .reveal.pending{opacity:1;transform:none}}
+
+
+html[lang="de"] .en{display:none!important}
+html[lang="en"] .de{display:none!important}
+.langswitch{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;font:500 12px var(--mono);letter-spacing:.08em}
+.langswitch button{background:transparent;border:0;color:var(--muted);padding:7px 10px;cursor:pointer;font:inherit}
+.langswitch button[aria-pressed="true"]{background:var(--sky);color:var(--bg)}
+
+
+.docs{padding-block:clamp(56px,8vw,96px);background:var(--docs-bg);color:var(--paper-fg);border-top:1px solid var(--docs-line)}
+.docs .eyebrow{color:var(--docs-accent)}
+.docs h2{color:var(--paper-fg)}
+.docs .btn{border-color:var(--paper-fg);color:var(--paper-fg)}
+.docs .btn:hover,.docs .btn:focus-visible{background:var(--paper-fg);color:#fff}
+.doc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;max-width:820px;margin:48px auto 0}
+.doc-head h2{font-size:clamp(26px,3.5vw,36px);font-weight:700;margin:0}
+.doc{background:var(--paper);color:var(--paper-fg);max-width:820px;margin:24px auto 0;padding:clamp(28px,5vw,64px);box-shadow:0 18px 50px rgba(4,4,64,.14);font-size:15px;line-height:1.5;border-top:4px solid var(--bg)}
+.doc .name{font-family:var(--display);font-size:30px;font-weight:700;line-height:1}
+.doc .contact{font-size:13px;color:var(--paper-muted);margin-top:8px}
+.doc .contact span+span::before{content:" · ";color:#aab0c8}
+.doc hr{border:0;border-top:1px solid var(--paper-line);margin:18px 0}
+.doc .subject{font-family:var(--display);font-weight:600;font-size:19px;margin-top:4px}
+.doc .dateline{font-size:13px;color:var(--paper-muted);margin-top:4px}
+.doc p{margin:12px 0;max-width:74ch}
+.doc ul.ach{padding-left:18px;margin:12px 0}
+.doc ul.ach li{margin:7px 0}
+.doc .sign{margin-top:22px}
+.doc h3{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-muted);margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--paper-line)}
+.cv .job{display:grid;grid-template-columns:110px 1fr;gap:16px;margin:14px 0}
+.cv .job .when{font-family:var(--mono);font-size:12px;color:var(--paper-muted);padding-top:3px}
+.cv .job h4{margin:0;font-size:15px;font-weight:600;font-family:var(--body)}
+.cv .job .org{font-size:13px;color:var(--paper-muted);margin:2px 0 6px}
+.cv .job ul{padding-left:18px;margin:0}
+.cv .job li{margin:4px 0;font-size:14px}
+.cv .skills{display:grid;grid-template-columns:170px 1fr;gap:6px 16px;font-size:14px}
+.cv .skills b{font-weight:600}
+.cv .pubs li{font-size:13.5px;margin:5px 0}
+@media (max-width:640px){.cv .job,.cv .skills{grid-template-columns:1fr;gap:4px}}
+footer{padding:40px 0 60px;color:var(--paper-muted);font-size:13px;text-align:center;background:var(--docs-bg)}
+.deckblatt{display:none}
+@media print{
+  @page deck{size:A4;margin:0}
+  body[data-print="all"] .deckblatt{display:block;page:deck;position:relative;width:210mm;height:297mm;overflow:hidden;background:var(--deck-bg);color:var(--deck-fg);break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact;margin:0}
+  body[data-print="all"] .deckblatt canvas{position:absolute;inset:0;width:100%;height:100%}
+  body[data-print="all"] .deckblatt .dk{position:relative;height:100%;padding:16mm 16mm 18mm;display:grid;grid-template-rows:auto 1fr auto;gap:6mm;background:var(--deck-wash)}
+  .deckblatt .eyebrow{color:var(--deck-accent);font-size:8.5pt}
+  .deckblatt .dk-top{display:flex;justify-content:space-between;gap:8mm}
+  .deckblatt h1{font-size:30pt;font-weight:800;max-width:15ch;color:var(--deck-fg);margin:0}
+  .deckblatt h1 em{font-style:normal;color:var(--deck-em)}
+  .deckblatt .dk-mid p{font-size:11pt;max-width:70ch;color:var(--deck-muted);margin:5mm 0 0}
+  .deckblatt .dk-match{width:100%;border-collapse:collapse;margin-top:8mm;font-size:8.6pt;line-height:1.3}
+  .deckblatt .dk-match th{text-align:left;font:500 7.5pt var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--deck-accent);padding:0 3mm 2mm 0;border-bottom:1px solid var(--deck-line)}
+  .deckblatt .dk-match td{vertical-align:top;padding:2.4mm 4mm 2.4mm 0;border-bottom:1px solid var(--deck-line);color:var(--deck-muted)}
+  .deckblatt .dk-match td:first-child{font-family:var(--display);font-weight:600;color:var(--deck-fg);width:36%}
+  .deckblatt .dk-foot{display:flex;justify-content:space-between;gap:6mm;font-size:8pt;color:var(--deck-muted);flex-wrap:wrap}
+  .deckblatt .dk-foot b{color:var(--deck-fg);font-weight:500}
+  .deckblatt .dk-foot i{display:inline-block;width:2.2mm;height:2.2mm;border-radius:50%;background:#e30613;margin-right:2mm}
+  body[data-print="all"] #doc-cover{break-after:page;page-break-after:always}
+  body[data-print="all"] #doc-cv{break-before:page}
+  @page{size:A4;margin:13mm 16mm}
+  :root,html,body{background:#fff!important;color:#111;color-scheme:light!important}
+  body{font-size:11pt}
+  .bar,.hero,section.block,.doc-head,footer{display:none!important}
+  .docs{padding:0;background:#fff;border:0}
+  .doc{box-shadow:none;margin:0;padding:0;max-width:none;background:#fff;color:#111;border-top:0}
+  a{color:#111;text-decoration:none}
+  body[data-print="cover"] #doc-cv{display:none!important}
+  body[data-print="cv"] #doc-cover{display:none!important}
+  .doc{font-size:10.5pt;line-height:1.4}
+  .cv{font-size:10pt;line-height:1.36}
+  .doc p{orphans:3;widows:3}
+  .doc .name{font-size:22pt}
+  .doc .contact{font-size:9pt}
+  .doc hr{margin:10pt 0}
+  .doc .subject{font-size:13pt}
+  .doc ul.ach li{margin:4pt 0;break-inside:avoid}
+  .doc .sign{break-before:avoid}
+  .doc h3{break-after:avoid;page-break-after:avoid;margin:14pt 0 6pt;font-size:9pt}
+  .cv .summary{font-size:9.8pt;break-inside:avoid}
+  .cv .job{break-inside:avoid;page-break-inside:avoid;margin:8pt 0}
+  .cv .job li{font-size:9.4pt;margin:1.5pt 0}
+  .cv .job h4{font-size:10.5pt}
+  .cv .job .org{font-size:9pt}
+  .cv .skills{font-size:9.4pt;gap:2pt 12pt}
+  .cv .skills b,.cv .skills span{break-inside:avoid}
+  .cv .pubs{break-inside:avoid}
+  .cv .pubs li{font-size:9.3pt}
+  .cv h3+.job,.cv h3+.skills,.cv h3+.pubs{break-before:avoid}
+  .cv .pagebreak{break-before:page}
+}
+
+</style>
+</head>
+<body>
+<script>document.body.classList.add("js")</script>
+<header class="bar"><div class="wrap"><span class="brand"><i>●</i>stephan.buettig / ki-engineer</span><nav aria-label="Sections"><a href="#mission"><span class="de" >Aufgaben</span></a><a href="#governance"><span class="de" >Dreierteam</span></a><a href="#path"><span class="de" >Weg</span></a><a href="#plan"><span class="de" >Erste 90 Tage</span></a><a href="#cover"><span class="de" >Anschreiben</span></a></nav><div class="cta"><button class="btn" type="button" data-print="cover"><span class="de" >Anschreiben PDF</span></button></div></div></header><section class="hero"><div class="wrap"><div>
+    <span class="de eyebrow reveal" >Bewerbung · KI-Engineer (m/w/d) im Bereich Technologie und Prozesse (IT) · Sparkassen-Versicherung Sachsen</span><div class="reveal"><h1 class="de" >Der technische Motor für Ihre <em>KI-Use-Cases.</em></h1></div><p class="de lead reveal" >Seit 2022 baue ich bei der Digitalagentur Sachsen die Werkzeuge, mit denen Landesbehörden KI nutzen: Sprachmodell auswählen, RAG und MCP anbinden, in den Arbeitsablauf integrieren. Auf eigenen Servern vergleiche ich Cloud-Modelle mit Open-Source-Modellen und betreibe n8n, Ollama und vLLM.</p>
+    <div class="meta reveal"><span class="de" ><b>Dresden</b> · Büro, mobil oder beides</span><span class="de" >im Beruf seit <b>2014</b></span><span class="de" >M. Sc. Wasserwirtschaft, <b>TU Dresden</b></span><span class="de" >Co-Host von <b>PROMPTgenau</b></span></div>
+    <div class="cta reveal"><a class="btn solid" href="#cover"><span class="de" >Anschreiben lesen</span></a><a class="btn" href="#mission"><span class="de" >Ihre Aufgaben, meine Belege</span></a></div></div><div class="console reveal" aria-hidden="true"><div class="top"><i></i><i></i><i></i><span>ki-use-cases · stephan.buettig · sv-sachsen</span></div><div class="ln"><span class="pr">&gt;</span><span class="mod"><span class="de" >KI-Methoden</span></span><span class="bar2"><i></i></span><span class="st" data-ok="ready">loading</span></div><div class="ln"><span></span><span></span><span style="color:#9ea9d4"><span class="de" >LLMs, RAG, MCP, Vektordatenbank</span></span><span></span></div><div class="ln"><span class="pr">&gt;</span><span class="mod"><span class="de" >Pipelines + APIs</span></span><span class="bar2"><i></i></span><span class="st" data-ok="ready">loading</span></div><div class="ln"><span></span><span></span><span style="color:#9ea9d4"><span class="de" >n8n, PIM-Schnittstellen, Python</span></span><span></span></div><div class="ln"><span class="pr">&gt;</span><span class="mod"><span class="de" >Infrastruktur</span></span><span class="bar2"><i></i></span><span class="st" data-ok="ready">loading</span></div><div class="ln"><span></span><span></span><span style="color:#9ea9d4"><span class="de" >VPS, Docker, Ollama, vLLM, Open WebUI</span></span><span></span></div><div class="ln"><span class="pr">&gt;</span><span class="mod"><span class="de" >Modellbewertung</span></span><span class="bar2"><i></i></span><span class="st" data-ok="ready">loading</span></div><div class="ln"><span></span><span></span><span style="color:#9ea9d4"><span class="de" >Cloud vs. Open Source, Verifier</span></span><span></span></div><div class="ln"><span class="pr">&gt;</span><span class="mod"><span class="de" >Sicherheit + Recht</span></span><span class="bar2"><i></i></span><span class="st" data-ok="ready">loading</span></div><div class="ln"><span></span><span></span><span style="color:#9ea9d4"><span class="de" >EU AI Act, Datenschutz</span></span><span></span></div><div class="foot"><span class="de" >5 Module · <b>bereit</b> · Belege unten</span></div></div></div></section><section class="block" id="mission"><div class="wrap"><span class="de eyebrow" >Ihre Aufgaben</span><h2 class="de" >Sechs Aufgaben aus Ihrer Anzeige. Was ich heute schon tue.</h2><p class="de intro" >Links Ihre Anzeige, rechts mein Beleg aus dem Lebenslauf. Wo ich noch nicht bin, steht es dabei.</p><div class="missions"><div class="mission"><div class="ask"><span class="de" >KI-Methoden konfigurieren, entwickeln, integrieren</span><small class="de" >Wissensgraphen, Transformer, LLMs; Skills, MCPs, RAG</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Mein Alltag seit 2022.</b> <span class="de" >Für die Werkzeuge der Digitalagentur wähle ich Sprachmodelle aus und binde RAG, MCP und Vektordatenbanken an. Privat habe ich ein Verifier-System gebaut, das Antworten mehrerer Open-Source-LLMs nach dem Mixture-of-Experts-Prinzip zusammenführt und die beste auswählt.</span></div></div><div class="mission"><div class="ask"><span class="de" >Datenpipelines, Schnittstellen und APIs</span><small class="de" >Integration in bestehende Systeme</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Läuft bei einem Online-Händler.</b> <span class="de" >Mit n8n und einem PIM-System laufen dort KI-gestützte Vorgänge zu Rechnungen, Kundenanfragen und dem Shop-Betrieb. Beim Landesamt habe ich Datenprodukte aus Satellit, Flugzeug und Drohne in behördliche Fachverfahren integriert.</span></div></div><div class="mission"><div class="ask"><span class="de" >Technische Architekturen, Technologie- und Modellauswahl</span><small class="de" >evaluieren, optimieren, in die IT-Architektur einfügen</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Eigene Infrastruktur als Prüfstand.</b> <span class="de" >Mehrere VPS-Server mit Docker, darauf Ollama, vLLM, Open WebUI, n8n und eine Vektordatenbank. Dort vergleiche ich Cloud-Modelle systematisch mit Open-Source-Modellen, bevor ein Werkzeug ein Modell bekommt.</span></div></div><div class="mission"><div class="ask"><span class="de" >Betrieb, Monitoring, Deployments, MLOps</span><small class="de" >Performance, Skalierbarkeit, Wartbarkeit, Stabilität</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Hier bin ich noch nicht.</b> <span class="de" >Meine Infrastruktur ist eine fortgeschrittene Testumgebung, kein Produktivbetrieb mit Betriebsverantwortung. Was ich mitbringe, ist Docker-Praxis und der Wille, Monitoring, Versionierung und Rollback von Anfang an mitzubauen. Ihre Anzeige lädt dazu ein, Entwicklungspotenziale gemeinsam anzuschauen, und genau das meine ich.</span></div></div><div class="mission"><div class="ask"><span class="de" >Informationssicherheit, Datenschutz, Regulatorik</span><small class="de" >bei Entwicklung und Integration berücksichtigen</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Teil jeder Sprechstunde.</b> <span class="de" >In der KI-Sprechstunde berate ich Beschäftigte zu EU AI Act und Datenschutz beim KI-Einsatz. Die Fragen kommen aus dem Alltag und müssen in der Lösung beantwortet sein, nicht in einer Fußnote.</span></div></div><div class="mission"><div class="ask"><span class="de" >Externe Partner steuern, Know-how verankern</span><small class="de" >technische Qualität und nachhaltiger Wissenstransfer</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Vergabe und Schulung sind geübt.</b> <span class="de" >Beim Landesamt habe ich Projektleistungen ausgeschrieben, vergeben und abgenommen. Bei der Digitalagentur entwickle ich Schulungen für Landesbehörden und einen Stationenlauf, der aus Umfrageantworten individuelle Lernpfade ableitet.</span></div></div></div><div class="req"><div><span class="de q" >Studium</span><h3 class="de" >Naturwissenschaftlich-technisch</h3><p class="de" >M. Sc. Wasserwirtschaft, TU Dresden, Note 1,3. Module unter anderem Hydroinformatik und Angewandte Umweltsystemanalyse.</p></div><div><span class="de q" >Programmierung und Daten</span><h3 class="de" >Python, Vektordatenbanken, Docker</h3><p class="de" >Python für Skripte, Datenaufbereitung und Automatisierung, KI-gestützte Entwicklung mit Claude Code und OpenAI Codex. C++ und Java sind nicht mein Werkzeug.</p></div><div><span class="de q" >Cloud und Deployments</span><h3 class="de" >VPS, Docker, Google Earth Engine</h3><p class="de" >Eigene Server mit Docker-Containern; WaterMaskAnalyzer auf Google Earth Engine entwickelt und veröffentlicht. Azure AI kenne ich noch nicht aus der Praxis.</p></div><div><span class="de q" >Arbeitsweise</span><h3 class="de" >Strukturiert, neugierig, verantwortlich</h3><p class="de" >Aus einer Fachfrage wird ein Werkzeug, das andere nutzen. Oft funktioniert das Ergebnis am Ende auch ohne KI, und das sage ich dann auch.</p></div></div></div></section><section class="block" id="governance"><div class="wrap"><span class="de eyebrow" >Dreierteam</span><h2 class="de" >Drei Rollen, eine Lösung.</h2><p class="de intro" >Ihre Anzeige beschreibt den KI-Engineer neben einem KI-Product-Owner und einem KI-Koordinator. So würde ich die Schnittstellen zu beiden füllen.</p><div class="gov"><article><span class="de k" >KI-Product-Owner</span><h3 class="de" >Anforderungen und Use-Cases</h3><p class="de" >Ich kenne beide Seiten des Tischs. Bei der Digitalagentur finde ich Anwendungsfälle selbst und baue dann. Hier bringe ich die Übersetzung mit, von der Anforderung zur Architektur, und frage früh, was gemessen werden soll.</p></article><article><span class="de k" >KI-Koordinator</span><h3 class="de" >Standards und Governance</h3><p class="de" >EU AI Act und Datenschutz sind mir aus der Beratung vertraut. Standards werden in der Umsetzung geprüft, nicht nachträglich. Ich liefere die technische Dokumentation, die der Koordinator für seine Nachweise braucht.</p></article><article><span class="de k" >Externe Partner</span><h3 class="de" >Qualität und Wissenstransfer</h3><p class="de" >Leistungsbeschreibung, Abnahme und Übergabe kenne ich aus Vergaben beim Landesamt. Wissen bleibt im Haus, wenn Dokumentation und Schulung Teil des Auftrags sind.</p></article></div><p class="de note" >Vorschläge von außen, aufgebaut auf Ihrer Anzeige. Ausgestalten würde ich sie mit dem Team.</p></div></section><section class="block" id="path"><div class="wrap"><span class="de eyebrow" >Weg</span><h2 class="de" >Von Wasserdaten zu KI im Arbeitsalltag.</h2><p class="de intro" >Der rote Faden sind Daten. Aus einer Fachfrage wird ein Werkzeug, das andere nutzen. Oft funktioniert das Ergebnis auch ohne KI, und das ist in Ordnung.</p><div class="river"><ol class="stations"><li class="station now"><div class="de when" >03/2022 – heute</div><div class="what"><h3 class="de" >Sachbearbeiter Digitale Infrastruktur, Schwerpunkt KI-Use-Cases, Prototypen und Enablement</h3><div class="de org" >Digitalagentur Sachsen (DiAS), Dresden</div><p class="de" >Anwendungsfälle finden, Prototyp bauen, Ergebnis in den Alltag der Behörden bringen. Use-Case-Radar, Feasibility-Analyzer, Glasfaser-Dashboard. Modellauswahl, RAG, MCP. KI-Sprechstunde zu EU AI Act und Datenschutz, Schulungen, Podcast PROMPTgenau.</p><div class="tags"><span class="tag hot">LLMs</span><span class="tag hot">RAG</span><span class="tag hot">MCP</span><span class="tag hot">Vektordatenbanken</span><span class="tag hot">Docker</span><span class="tag">EU AI Act</span><span class="tag">Schulungen</span></div></div></li><li class="station"><div class="de when" >09/2020 – 02/2022</div><div class="what"><h3 class="de" >Referent, sächsischer Flussgebietskoordinator</h3><div class="de org" >Sächsisches Staatsministerium für Energie, Klimaschutz, Umwelt und Landwirtschaft, Referat 44</div><p class="de" >Fachliche Grundsatzangelegenheiten der Gewässerbewirtschaftung, behördenübergreifende Vorbereitung nationaler und internationaler Gremien, Koordinierung der sächsischen Beiträge zur Wasserrahmenrichtlinie und Hochwasserrisikomanagement-Richtlinie.</p><div class="tags"><span class="tag">Gremien</span><span class="tag">Koordination</span><span class="tag">EU-Richtlinien</span></div></div></li><li class="station"><div class="de when" >03/2016 – 08/2020</div><div class="what"><h3 class="de" >Referent für Ereignisanalyse (Landeshochwasserzentrum, Gewässerkunde)</h3><div class="de org" >Landestalsperrenverwaltung, tätig für das LfULG, Dresden</div><p class="de" >Hochwasser- und Niedrigwasserdaten aufbereitet und ausgewertet, Konzept für Fernerkundungsdaten in Fachverfahren, Demoanwendung auf Google Earth Engine (später WaterMaskAnalyzer), Ausschreibung und Vergabe von Projektleistungen.</p><div class="tags"><span class="tag hot">Google Earth Engine</span><span class="tag hot">GIS</span><span class="tag">Fachverfahren</span><span class="tag">Vergabe</span></div></div></li><li class="station"><div class="de when" >12/2014 – 02/2016</div><div class="what"><h3 class="de" >Projektingenieur in der Innovationsabteilung</h3><div class="de org" >GIP Grundwasser-Ingenieurbau-Planung GmbH, Dresden</div><p class="de" >Förderprojekt der Sächsischen Aufbaubank zur Weiterentwicklung von Technologien für Flusskläranlagen am Beispiel der „Braunen Spree“.</p><div class="tags"><span class="tag">Förderprojekt</span><span class="tag">Ingenieurbau</span></div></div></li><li class="station"><div class="de when" >2008 – 2014</div><div class="what"><h3 class="de" >B. Sc. und M. Sc. Wasserwirtschaft</h3><div class="de org" >Technische Universität Dresden</div><p class="de" >Master mit 1,3; Schwerpunkte Gewässerentwicklung, Naturnaher Wasserbau, Grundwasserbewirtschaftung mit Computermodellen; Hydroinformatik.</p><div class="tags"><span class="tag">Hydroinformatik</span><span class="tag">Modellierung</span></div></div></li></ol></div></div></section><section class="block" id="plan"><div class="wrap"><span class="de eyebrow" >Erste 90 Tage</span><h2 class="de" >So würde ich anfangen.</h2><p class="de intro" >Aufgebaut auf Ihrer Anzeige. Jeder Schritt endet mit etwas, das KI-Product-Owner und KI-Koordinator sehen können.</p><div class="plan"><div class="step"><span class="de k" >Tag 1–30 · Bestand</span><h3 class="de" >Systeme, Daten, Vorgaben kennen</h3><ul><li class="de" >IT-Architektur, Schnittstellen und bestehende KI-Ansätze aufnehmen</li><li class="de" >Sicherheits- und Datenschutzvorgaben der SV Sachsen mit dem KI-Koordinator durchgehen</li><li class="de" >Offene Use-Cases des KI-Product-Owners nach technischer Machbarkeit sortieren</li></ul></div><div class="step"><span class="de k" >Tag 31–60 · Ein Use-Case</span><h3 class="de" >Architektur und Testumgebung</h3><ul><li class="de" >Einen Use-Case mit dem Product-Owner wählen, Ausgangslage und Messgröße festhalten</li><li class="de" >Modelle vergleichen (Cloud, Open Source, Azure AI), Architekturentscheidung dokumentieren</li><li class="de" >Testumgebung mit Versionierung und Monitoring aufsetzen, Partnerleistungen beschreiben</li></ul></div><div class="step"><span class="de k" >Tag 61–90 · Produktiv</span><h3 class="de" >Erstes System im Betrieb</h3><ul><li class="de" >Pilot produktiv mit Monitoring, Rollback und Betriebshandbuch</li><li class="de" >Übergabedokumentation und erste Schulung für den Fachbereich</li><li class="de" >Bewertung neuer Modelle und Frameworks als regelmäßiges Format</li></ul></div></div><p class="de note" >Ein Plan von außen. Er ändert sich an dem Tag, an dem ich erfahre, wie die SV Sachsen wirklich arbeitet.</p></div></section><section class="docs" id="documents"><div class="wrap">
+    <div class="doc-head" id="cover"><div><span class="de eyebrow" >Dokument 1</span><h2 class="de" >Anschreiben</h2></div><button class="btn" type="button" data-print="cover"><span class="de" >Als PDF drucken</span></button></div>
+    <article class="doc cover" id="doc-cover">
+      <div class="name">Stephan Büttig</div>
+      <div class="contact"><span>Dresden</span><span>linkedin.com/in/stephan-büttig</span></div>
+      <div class="contact"><span class="de" >M. Sc. Wasserwirtschaft (TU Dresden)</span></div>
+      <hr>
+      <div class="de subject" >Bewerbung als KI-Engineer (m/w/d) im Bereich Technologie und Prozesse (IT)</div>
+      <div class="de dateline" >Sparkassen-Versicherung Sachsen · Dresden · 7. Oktober 2026</div>
+      <p class="de" >Sehr geehrte Frau Neumann,</p>
+      <p class="de" >Sie suchen den technischen Motor für Ihre KI-Use-Cases. Seit 2022 baue ich bei der Digitalagentur Sachsen die Werkzeuge, mit denen Landesbehörden KI im Alltag nutzen. Ich wähle das Sprachmodell aus, binde RAG, MCP und Vektordatenbanken an und integriere das Ergebnis in bestehende Arbeitsabläufe. Auf eigenen Servern vergleiche ich Cloud-Modelle mit Open-Source-Modellen und betreibe n8n, Ollama und vLLM. Dafür bewerbe ich mich bei Ihnen in Dresden.</p>
+      <p class="de" >Ich bin Ingenieur für Wasserwirtschaft (M. Sc., TU Dresden) und seit 2014 im Beruf, davon sechs Jahre mit Hochwasser-, Niedrigwasser- und Satellitendaten in der sächsischen Umweltverwaltung. Dort entstand der WaterMaskAnalyzer, ein Werkzeug auf Google Earth Engine, das ich 2022 als Erstautor in Remote Sensing veröffentlicht habe. Was Sie in Ihrer Anzeige beschreiben, belege ich so:</p>
+      <ul class="ach"><li class="de" ><b>KI-Methoden integrieren.</b> Werkzeuge mit verschiedenen Sprachmodellen umgesetzt; RAG, MCP, Prompt Engineering und Vektordatenbanken im Einsatz; ein selbst gebautes Verifier-System führt Antworten mehrerer Open-Source-LLMs nach dem Mixture-of-Experts-Prinzip zusammen.</li><li class="de" ><b>Datenpipelines und Schnittstellen.</b> Für einen Online-Händler laufen mit n8n und einem PIM-System KI-gestützte Vorgänge zu Rechnungen, Kundenanfragen und dem Shop-Betrieb; beim Landesamt habe ich Fernerkundungsdaten in Fachverfahren integriert.</li><li class="de" ><b>Modelle evaluieren.</b> Mehrere VPS-Server mit Docker, Ollama, vLLM, Open WebUI und Vektordatenbank als Prüfstand für systematische Modellvergleiche.</li><li class="de" ><b>Sicherheit, Datenschutz, Regulatorik.</b> In der KI-Sprechstunde berate ich Beschäftigte zu EU AI Act und Datenschutz beim KI-Einsatz.</li><li class="de" ><b>Partner steuern, Wissen verankern.</b> Ausschreibung, Vergabe und Abnahme von Projektleistungen beim Landesamt; Schulungen für Landesbehörden und ein Stationenlauf mit individuellen Lernpfaden.</li></ul>
+      <p class="de" >Offen sage ich, wo ich noch nicht bin. Meine Infrastruktur ist eine fortgeschrittene Testumgebung, kein Produktivbetrieb mit Betriebsverantwortung, und Azure AI kenne ich nicht aus der Praxis. Beides will ich bei Ihnen lernen und von Anfang an mit Monitoring, Versionierung und Rollback arbeiten. Meine Kündigungsfrist beträgt fünf Monate zum Quartalsende, ein Eintritt ist zum 1. April 2027 möglich.</p>
+      <p class="de" >Gern zeige ich Ihnen im Gespräch an einem Werkzeug der Digitalagentur, wie ich von der Anforderung bis zur Integration arbeite.</p>
+      <p class="de sign" >Mit freundlichen Grüßen<br>Stephan Büttig</p>
+    </article></div></section><footer>Stephan Büttig · Dresden · <span class="de" >7. Oktober 2026</span></footer>
+<script>
+
+(function(){
+  var root=document.documentElement,titles={de:'Stephan Büttig · KI-Engineer für die SV Sachsen',en:'Stephan Büttig · KI-Engineer für die SV Sachsen'};
+  function setLang(l){root.lang=l;document.title=titles[l];document.querySelectorAll(".langswitch button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.lang===l))});try{history.replaceState(null,"","#"+l)}catch(e){}}
+  var want=(location.hash.replace("#","")||"");if(want!=="de"&&want!=="en")want="de";
+  setLang(want);
+  document.querySelectorAll(".langswitch button").forEach(function(x){x.addEventListener("click",function(){setLang(x.dataset.lang)})});
+  window.addEventListener("hashchange",function(){var h=location.hash.replace("#","");if(h==="de"||h==="en")setLang(h)});
+  document.querySelectorAll("[data-print]").forEach(function(x){x.addEventListener("click",function(){document.body.setAttribute("data-print",x.getAttribute("data-print"));window.print()})});
+  window.addEventListener("afterprint",function(){document.body.removeAttribute("data-print")});
+})();
+
+(function(){
+
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduce&&"IntersectionObserver" in window){
+    document.querySelectorAll(".hero .reveal").forEach(function(e,i){e.classList.add("pending");setTimeout(function(){e.classList.remove("pending")},200+i*140)});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}})},{threshold:.3});
+    document.querySelectorAll(".mission,.step,.gov article").forEach(function(r){io.observe(r)});
+  }else{document.querySelectorAll(".mission,.step,.gov article").forEach(function(r){r.classList.add("in")});}
+
+
+  var lines=document.querySelectorAll(".console .ln");
+  function boot(){lines.forEach(function(l,i){setTimeout(function(){l.classList.add("on");setTimeout(function(){l.classList.add("ok");var st=l.querySelector(".st");if(st)st.textContent=st.dataset.ok},900+Math.random()*700)},300+i*420)})}
+  if(reduce){lines.forEach(function(l){l.classList.add("on","ok");var st=l.querySelector(".st");if(st)st.textContent=st.dataset.ok})}else boot();
+  var pc=document.getElementById("deck-print");if(pc){var x=pc.getContext("2d");pc.width=794*2;pc.height=1123*2;x.setTransform(2,0,0,2,0,0);x.fillStyle="#d5edff";x.fillRect(0,0,794,1123);
+    x.strokeStyle="rgba(4,4,64,.12)";x.lineWidth=1;for(var gx=0;gx<794;gx+=28){x.beginPath();x.moveTo(gx,0);x.lineTo(gx,1123);x.stroke()}for(var gy=0;gy<1123;gy+=28){x.beginPath();x.moveTo(0,gy);x.lineTo(794,gy);x.stroke()}
+    x.fillStyle="#2a59a8";for(var i=0;i<5;i++){x.fillRect(620,900+i*26,120,8)}x.fillStyle="#e30613";x.beginPath();x.arc(606,904,5,0,6.28);x.fill()}
+
+
+  var river=document.querySelector(".river"),list=river&&river.querySelector(".stations");
+  function drawRiver(){
+    if(!river)return;var old=river.querySelector("svg.path");if(old)old.remove();
+    var dots=list.querySelectorAll(".what");if(dots.length<2)return;
+    var rb=river.getBoundingClientRect(),pts=[];
+    dots.forEach(function(el){var bx=el.getBoundingClientRect();pts.push([bx.left-rb.left+6,bx.top-rb.top+16])});
+    var d="M"+pts[0][0]+" "+pts[0][1];
+    for(var i=1;i<pts.length;i++){var a=pts[i-1],b2=pts[i],m=(a[1]+b2[1])/2;d+=" C"+(a[0]-18)+" "+m+" "+(b2[0]+18)+" "+m+" "+b2[0]+" "+b2[1]}
+    var svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("class","path");svg.setAttribute("viewBox","0 0 "+rb.width+" "+rb.height);svg.setAttribute("preserveAspectRatio","none");
+    var path=document.createElementNS("http://www.w3.org/2000/svg","path");path.setAttribute("d",d);svg.appendChild(path);river.insertBefore(svg,list);
+    var len=path.getTotalLength();path.style.strokeDasharray=len;path.style.strokeDashoffset=reduce?0:len;
+    if(!reduce){var seen=new IntersectionObserver(function(e){if(e[0].isIntersecting){path.style.transition="stroke-dashoffset 2.2s ease";path.style.strokeDashoffset=0;seen.disconnect()}},{threshold:.15});seen.observe(river)}
+  }
+  drawRiver();window.addEventListener("resize",drawRiver);document.querySelectorAll(".langswitch button").forEach(function(x){x.addEventListener("click",function(){setTimeout(drawRiver,50)})});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawRiver);
+
+})();
+</script>
+</body>
+</html>
