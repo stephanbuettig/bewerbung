@@ -21,9 +21,10 @@ a{color:var(--lane)}h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;mar
 .wrap{max-width:1080px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
 .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--lane)}
 .bar{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(6,6,58,.8);border-bottom:1px solid var(--line)}
-.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:56px;flex-wrap:wrap}
-.bar nav{display:flex;gap:16px;flex-wrap:wrap}@media (max-width:1240px){.bar nav{display:none}}
+.bar .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;min-height:56px}
+.bar nav{display:flex;gap:16px;justify-content:center;white-space:nowrap;overflow:hidden}@media (max-width:1400px){.bar nav{display:none}}
 .bar nav a{color:var(--muted);text-decoration:none;font-size:14px}.bar nav a:hover{color:var(--fg)}
+.bar .cta{flex-wrap:nowrap;justify-content:flex-end}@media (max-width:760px){.bar .wrap{grid-template-columns:1fr;gap:8px;padding-block:8px}.bar .cta{flex-wrap:wrap;justify-content:flex-start}}
 .brand{font-family:var(--display);font-weight:800;font-stretch:125%;letter-spacing:.02em;text-transform:uppercase;font-size:14px}
 .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--lane);color:var(--lane);background:transparent;border-radius:999px;padding:8px 16px;font:600 14px var(--body);cursor:pointer;text-decoration:none}
 .btn:hover,.btn:focus-visible{background:var(--lane);color:var(--bg);outline:none}.btn.solid{background:var(--lane);color:var(--bg)}.btn.solid:hover{background:#fff}
@@ -197,9 +198,8 @@ footer{padding:40px 0 60px;color:var(--paper-muted);font-size:13px;text-align:ce
 
 (function(){
   var root=document.documentElement,titles={de:'Stephan Büttig · AI CoE für Communardo',en:'Stephan Büttig · AI CoE for Communardo'};
-  function setLang(l){root.lang=l;document.title=titles[l];document.querySelectorAll(".langswitch button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.lang===l))});try{localStorage.setItem("lang",l)}catch(e){}}
-  var want=(location.hash.replace("#","")||"");if(want!=="de"&&want!=="en"){try{want=localStorage.getItem("lang")||""}catch(e){want=""}}
-  if(want!=="de"&&want!=="en")want=(navigator.language||"").toLowerCase().startsWith("de")?"de":"en";
+  function setLang(l){root.lang=l;document.title=titles[l];document.querySelectorAll(".langswitch button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.lang===l))});try{history.replaceState(null,"","#"+l)}catch(e){}}
+  var want=(location.hash.replace("#","")||"");if(want!=="de"&&want!=="en")want="de";
   setLang(want);
   document.querySelectorAll(".langswitch button").forEach(function(x){x.addEventListener("click",function(){setLang(x.dataset.lang)})});
   window.addEventListener("hashchange",function(){var h=location.hash.replace("#","");if(h==="de"||h==="en")setLang(h)});
