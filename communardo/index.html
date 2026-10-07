@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Stephan Büttig · AI CoE for Communardo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Communardo-Navy als Bühne. Im Kopf laufen viele Anfragen aus allen Richtungen auf eine
+   Tür zu (das AI CoE) und verlassen sie auf einem einzigen hellen, schnellen Pfad:
+   "make the sanctioned path the fastest path". Darunter Mission ↔ Belege, Governance,
+   Werdegang, die ersten 90 Tage, dann Anschreiben und Lebenslauf als weiße Blätter. */
+:root{
+  --bg:#040040;            /* Communardo navy */
+  --bg-2:#0b0b5e;
+  --fg:#f2f6ff;
+  --muted:#9ea9d4;
+  --line:rgba(213,237,255,.14);
+  --sky:#d5edff;           /* Communardo light blue */
+  --lane:#7cc4ff;          /* hellerer Pfad auf Navy */
+  --signal:#e30613;        /* Communardo red, nur für die Tür */
+  --paper:#ffffff;
+  --paper-fg:#0d0d3a;
+  --paper-muted:#5b6185;
+  --paper-line:#dfe3f0;
+  --docs-bg:#e9f2fb;
+  --display:"Saira","Eurostile","Microgramma","Segoe UI",Arial,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"IBM Plex Mono",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--sky)}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05}
+.wrap{max-width:1100px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--lane)}
+
+/* Kopfleiste */
+.bar{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(4,4,64,.78);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;flex-wrap:wrap}
+.bar nav{display:flex;gap:16px;flex-wrap:wrap}
+@media (max-width:1240px){.bar nav{display:none}}
+.bar nav a{color:var(--muted);text-decoration:none;font-size:14px}
+.bar nav a:hover,.bar nav a:focus-visible{color:var(--fg)}
+.brand{font-family:var(--display);font-weight:700;letter-spacing:.02em}
+.brand i{font-style:normal;display:inline-block;width:8px;height:8px;background:var(--signal);border-radius:50%;margin-right:8px;vertical-align:1px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--sky);color:var(--sky);background:transparent;border-radius:3px;padding:8px 14px;font:500 14px var(--body);cursor:pointer;text-decoration:none}
+.btn:hover,.btn:focus-visible{background:var(--sky);color:var(--bg);outline:none}
+.btn.solid{background:var(--sky);color:var(--bg)}
+.btn.solid:hover{background:#fff}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,4,64,.72) 0%,rgba(4,4,64,.45) 55%,rgba(4,4,64,0) 100%);pointer-events:none}
+.hero .wrap{position:relative;z-index:1;padding-block:clamp(56px,10vw,120px) clamp(44px,7vw,84px);display:grid;gap:26px}
+.hero h1{font-size:clamp(40px,6.6vw,82px);font-weight:800;letter-spacing:-.01em;max-width:13ch;text-transform:none}
+.hero h1 em{font-style:normal;color:var(--sky)}
+.hero p.lead{font-size:clamp(17px,2vw,21px);max-width:58ch;margin:0;color:#cfd8f5}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.hero .meta b{color:var(--fg);font-weight:500}
+.reveal{opacity:1;transform:none;transition:opacity .7s ease,transform .7s ease}
+.js .reveal.pending{opacity:0;transform:translateY(16px)}
+
+section.block{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--line)}
+section.block h2{font-size:clamp(28px,4vw,46px);font-weight:700;margin-top:10px;max-width:24ch}
+.intro{max-width:64ch;color:#cfd8f5;margin:18px 0 0}
+
+/* Mission ↔ Beleg */
+.missions{display:grid;gap:0;margin-top:36px;counter-reset:m}
+.mission{display:grid;grid-template-columns:minmax(0,1fr) 54px minmax(0,1.35fr);gap:16px;padding:22px 0;border-top:1px solid var(--line);align-items:start}
+.mission:last-child{border-bottom:1px solid var(--line)}
+.mission .ask{font-family:var(--display);font-weight:600;font-size:20px;line-height:1.2}
+.mission .ask small{display:block;font:12px var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+.mission .door{display:grid;place-items:center;height:30px}
+.mission .door svg{width:40px;height:20px}
+.mission .door path{stroke:var(--lane);stroke-width:2;fill:none;stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset .9s ease .2s}
+.mission .door circle{fill:var(--signal);opacity:0;transition:opacity .4s ease .9s}
+.mission.in .door path{stroke-dashoffset:0}
+.mission.in .door circle{opacity:1}
+.mission .have{color:#dbe3fb;min-width:0}
+.mission .have b{color:var(--fg)}
+@media (max-width:680px){.mission{grid-template-columns:1fr}.mission .door{display:none}}
+
+/* Anforderungen als Liste mit Belegen */
+.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:36px}
+.req div{background:var(--bg);padding:22px 20px;display:grid;gap:8px;align-content:start}
+.req h3{font-size:18px;font-weight:600;line-height:1.25}
+.req p{margin:0;font-size:15px;color:#cfd8f5}
+.req .q{font:12px var(--mono);color:var(--lane);letter-spacing:.04em}
+
+/* Governance: Rollen nach EU AI Act */
+.gov{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:36px}
+.gov article{border:1px solid var(--line);padding:22px 20px;display:grid;gap:10px;background:linear-gradient(180deg,rgba(213,237,255,.04),transparent)}
+.gov .k{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lane)}
+.gov h3{font-size:20px;font-weight:600}
+.gov p{margin:0;font-size:15px;color:#cfd8f5}
+
+/* Werdegang */
+.river{position:relative;margin-top:40px}
+.river svg.path{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+.river svg.path path{fill:none;stroke:var(--lane);stroke-width:2;stroke-linecap:round;opacity:.9}
+.stations{list-style:none;margin:0;padding:0;display:grid;gap:34px;position:relative}
+.station{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start}
+.station .when{grid-column:1;grid-row:1;font-family:var(--mono);font-size:13px;color:var(--lane);padding-top:6px;white-space:nowrap}
+.station .what{grid-column:2;grid-row:1}
+.station .what{position:relative;padding-left:28px}
+.station .what::before{content:"";position:absolute;left:0;top:10px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--lane);box-shadow:0 0 0 6px rgba(124,196,255,.12)}
+.station.now .what::before{background:var(--signal);border-color:var(--signal);box-shadow:0 0 0 6px rgba(227,6,19,.18)}
+.station h3{font-size:20px;font-weight:600}
+.station .org{color:var(--muted);font-size:14px;margin:2px 0 8px}
+.station p{margin:0;color:#cfd8f5;max-width:62ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.tag{font:12px var(--mono);border:1px solid var(--line);border-radius:3px;padding:3px 8px;color:var(--muted)}
+.tag.hot{border-color:rgba(124,196,255,.55);color:var(--sky)}
+@media (max-width:640px){.station{grid-template-columns:1fr;gap:4px}.station .when,.station .what{grid-column:1;grid-row:auto}}
+
+/* 90 Tage */
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:36px}
+.step{border-top:3px solid var(--lane);padding:20px 4px 0;display:grid;gap:10px;align-content:start}
+.step:last-child{border-top-color:var(--signal)}
+.step .k{font:500 12px var(--mono);color:var(--sky);letter-spacing:.12em;text-transform:uppercase}
+.step h3{font-size:21px;font-weight:600}
+.step ul{margin:0;padding-left:18px;color:#cfd8f5;font-size:15px}
+.step li{margin:4px 0}
+.note{margin-top:22px;font-size:14px;color:var(--muted);max-width:70ch}
+
+/* Dokumente */
+.docs{padding-block:clamp(56px,8vw,96px);background:var(--docs-bg);color:var(--paper-fg);border-top:1px solid #c9d6e6}
+.docs .eyebrow{color:#2a59a8}
+.docs h2{color:var(--paper-fg)}
+.docs .btn{border-color:var(--paper-fg);color:var(--paper-fg)}
+.docs .btn:hover,.docs .btn:focus-visible{background:var(--paper-fg);color:#fff}
+.doc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;max-width:820px;margin:48px auto 0}
+.doc-head h2{font-size:clamp(26px,3.5vw,36px);font-weight:700}
+.doc{background:var(--paper);color:var(--paper-fg);max-width:820px;margin:24px auto 0;padding:clamp(28px,5vw,64px);box-shadow:0 18px 50px rgba(4,4,64,.14);font-size:15px;line-height:1.5;border-top:4px solid var(--bg)}
+.doc .name{font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:0;line-height:1}
+.doc .contact{font-size:13px;color:var(--paper-muted);margin-top:8px}
+.doc .contact span+span::before{content:" · ";color:#aab0c8}
+.doc hr{border:0;border-top:1px solid var(--paper-line);margin:18px 0}
+.doc .subject{font-family:var(--display);font-weight:600;font-size:19px;margin-top:4px}
+.doc .dateline{font-size:13px;color:var(--paper-muted);margin-top:4px}
+.doc p{margin:12px 0;max-width:74ch}
+.doc ul.ach{padding-left:18px;margin:12px 0}
+.doc ul.ach li{margin:7px 0}
+.doc .sign{margin-top:22px}
+.doc h3{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-muted);margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--paper-line)}
+.cv .job{display:grid;grid-template-columns:110px 1fr;gap:16px;margin:14px 0}
+.cv .job .when{font-family:var(--mono);font-size:12px;color:var(--paper-muted);padding-top:3px}
+.cv .job h4{margin:0;font-size:15px;font-weight:600;font-family:var(--body)}
+.cv .job .org{font-size:13px;color:var(--paper-muted);margin:2px 0 6px}
+.cv .job ul{padding-left:18px;margin:0}
+.cv .job li{margin:4px 0;font-size:14px}
+.cv .skills{display:grid;grid-template-columns:170px 1fr;gap:6px 16px;font-size:14px}
+.cv .skills b{font-weight:600}
+.cv .pubs li{font-size:13.5px;margin:5px 0}
+@media (max-width:640px){.cv .job,.cv .skills{grid-template-columns:1fr;gap:4px}}
+
+footer{padding:40px 0 60px;color:var(--paper-muted);font-size:13px;text-align:center;background:var(--docs-bg)}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal,.mission .door path,.mission .door circle{transition:none}
+  .js .reveal.pending{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+
+/* Deckblatt, nur im Druck der Mappe */
+.deckblatt{display:none}
+@media print{
+  @page deck{size:A4;margin:0}
+  body[data-print="all"] .deckblatt{display:block;page:deck;position:relative;width:210mm;height:297mm;overflow:hidden;background:#040040;color:#f2f6ff;break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact;margin:0}
+  body[data-print="all"] .deckblatt canvas{position:absolute;inset:0;width:100%;height:100%}
+  body[data-print="all"] .deckblatt .dk{position:relative;height:100%;padding:16mm 16mm 18mm;display:grid;grid-template-rows:auto 1fr auto;gap:6mm;background:linear-gradient(90deg,rgba(4,4,64,.94),rgba(4,4,64,.78) 60%,rgba(4,4,64,.4))}
+  .deckblatt .eyebrow{color:#7cc4ff;font-size:8.5pt}
+  .deckblatt .dk-top{display:flex;justify-content:space-between;gap:8mm}
+  .deckblatt h1{font-size:30pt;font-weight:800;max-width:15ch;color:#f2f6ff}
+  .deckblatt h1 em{font-style:normal;color:#d5edff}
+  .deckblatt .dk-mid p{font-size:11pt;max-width:70ch;color:#cfd8f5;margin:5mm 0 0}
+  .deckblatt .dk-match{width:100%;border-collapse:collapse;margin-top:8mm;font-size:8.6pt;line-height:1.3}
+  .deckblatt .dk-match th{text-align:left;font:500 7.5pt var(--mono);letter-spacing:.12em;text-transform:uppercase;color:#7cc4ff;padding:0 3mm 2mm 0;border-bottom:1px solid rgba(213,237,255,.28)}
+  .deckblatt .dk-match td{vertical-align:top;padding:2.4mm 4mm 2.4mm 0;border-bottom:1px solid rgba(213,237,255,.12);color:#dbe3fb}
+  .deckblatt .dk-match td:first-child{font-family:var(--display);font-weight:600;color:#f2f6ff;width:36%}
+  .deckblatt .dk-foot{display:flex;justify-content:space-between;gap:6mm;font-size:8pt;color:#9ea9d4;flex-wrap:wrap}
+  .deckblatt .dk-foot b{color:#f2f6ff;font-weight:500}
+  .deckblatt .dk-foot i{display:inline-block;width:2.2mm;height:2.2mm;border-radius:50%;background:#e30613;margin-right:2mm}
+  body[data-print="all"] #doc-cover{break-after:page;page-break-after:always}
+  body[data-print="all"] #doc-cv{break-before:page}
+}
+@media print{
+  @page{size:A4;margin:13mm 16mm}
+  :root,html,body{background:#fff!important;color:#111;color-scheme:light!important}
+  body{font-size:11pt}
+  .bar,.hero,section.block,.doc-head,footer{display:none!important}
+  .docs{padding:0;background:#fff;border:0}
+  .doc{box-shadow:none;margin:0;padding:0;max-width:none;background:#fff;color:#111;border-top:0}
+  a{color:#111;text-decoration:none}
+  body[data-print="cover"] #doc-cv{display:none!important}
+  body[data-print="cv"] #doc-cover{display:none!important}
+  .doc{font-size:10.5pt;line-height:1.4}
+  .cv{font-size:10pt;line-height:1.36}
+  .doc p{orphans:3;widows:3}
+  .doc .name{font-size:22pt}
+  .doc .contact{font-size:9pt}
+  .doc hr{margin:10pt 0}
+  .doc .subject{font-size:13pt}
+  .doc ul.ach li{margin:4pt 0;break-inside:avoid}
+  .doc .sign{break-before:avoid}
+  .doc h3{break-after:avoid;page-break-after:avoid;margin:14pt 0 6pt;font-size:9pt}
+  .cv .summary{font-size:9.8pt;break-inside:avoid}
+  .cv .job{break-inside:avoid;page-break-inside:avoid;margin:8pt 0}
+  .cv .job li{font-size:9.4pt;margin:1.5pt 0}
+  .cv .job h4{font-size:10.5pt}
+  .cv .job .org{font-size:9pt}
+  .cv .skills{font-size:9.4pt;gap:2pt 12pt}
+  .cv .skills b,.cv .skills span{break-inside:avoid}
+  .cv .pubs{break-inside:avoid}
+  .cv .pubs li{font-size:9.3pt}
+  .cv h3+.job,.cv h3+.skills,.cv h3+.pubs{break-before:avoid}
+  .cv .pagebreak{break-before:page}
+}
+</style>
+</head>
+<body>
+<script>document.body.classList.add("js")</script>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="brand"><i aria-hidden="true"></i>Stephan Büttig</span>
+    <nav aria-label="Sections">
+      <a href="#mission">Mission</a>
+      <a href="#governance">Governance</a>
+      <a href="#path">Path</a>
+      <a href="#first-90-days">First 90 days</a>
+      <a href="#cover">Cover letter</a>
+    </nav>
+    <div class="cta" data-docs>
+      <button class="btn" type="button" data-print="cover">Letter PDF</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero" aria-label="Introduction">
+  <canvas id="door" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <span class="eyebrow reveal">Application · Head of AI Center of Excellence (m/f/d) · Communardo</span>
+    <h1 class="reveal">Make the sanctioned path <em>the fastest path.</em></h1>
+    <p class="lead reveal">Since 2022 I have been finding use cases where AI takes work off people's desks, building the prototype and bringing the result into the daily work of Saxon state authorities. In the AI consultation hour I advise staff on everyday questions, including the EU AI Act and data protection.</p>
+    <div class="meta reveal">
+      <span><b>Dresden</b> · remote or hybrid</span>
+      <span>working since <b>2014</b></span>
+      <span>M.Sc. Water Management, <b>TU Dresden</b></span>
+      <span>co-host of <b>PROMPTgenau</b></span>
+    </div>
+    <div class="cta reveal">
+      <a class="btn solid" href="#cover">Read the cover letter</a>
+      <a class="btn" href="#mission">Your mission, my evidence</a>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="mission">
+  <div class="wrap">
+    <span class="eyebrow">Your mission</span>
+    <h2>Five tasks from your advert. What I already do.</h2>
+    <p class="intro">The left column quotes your advert. The right column describes my work at the Digitalagentur Sachsen and before.</p>
+    <div class="missions">
+      <div class="mission"><div class="ask">Own AI adoption end to end<small>training · AI Spotlight · use case library · hackathon · approved tools</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b>Adoption is my daily work.</b> I run the AI consultation hour for staff and train state authorities. A station-based course derives individual learning paths for working with language models from survey answers. My Use-Case-Radar lets authorities rate AI ideas by benefit and feasibility, a working basis for a use case library.</div></div>
+      <div class="mission"><div class="ask">Lead the redesign of how we actually work<small>with process owners in delivery and administration</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b>From the process to the tool.</b> For an online retailer I set up n8n and a PIM system so that AI-supported workflows handle invoices, customer enquiries and day-to-day shop operations. At the State Office I developed concepts for capturing flood event data and for using remote sensing data, including integrating the data products into the authorities' specialist procedures.</div></div>
+      <div class="mission"><div class="ask">Build and run the AI Operating System<small>agent orchestration · retrieval · prompt lifecycle · vendor-neutral</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b>Vendor-neutral by habit.</b> I select language models and integrate the results into existing workflows. My tools run on different models. I work hands-on with RAG, MCP, vector databases, n8n, Docker and Claude Code.</div></div>
+      <div class="mission"><div class="ask">Take ownership of AI governance<small>EU AI Act · AI Usage Guideline · Transparency Charter</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b>Compliance as a service.</b> In the consultation hour, staff bring everyday questions about the EU AI Act and data protection when using AI. Answering them quickly is how a fast, reliable compliance service starts.</div></div>
+      <div class="mission"><div class="ask">Represent the AI CoE on the Tech and AI Board<small>the one door every business knocks on</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b>Used to boards and committees.</b> As Saxony's river basin coordinator at the environment ministry I prepared national and international committee meetings across authorities and represented the Free State of Saxony in several of them.</div></div>
+    </div>
+
+    <div class="req" aria-label="What you ask for">
+      <div><span class="q">Hands-on technical range</span><h3>LLM and agent architectures, RAG, MCP</h3><p>RAG, MCP, vector databases, n8n workflows and prompt engineering in my own tools. Claude Code and OpenAI Codex for AI-assisted development.</p></div>
+      <div><span class="q">Lead without formal authority</span><h3>Influence across authorities</h3><p>River basin coordination across several authorities, federal states and international bodies. Co-host of the PROMPTgenau podcast together with three colleagues.</p></div>
+      <div><span class="q">Regulatory footing</span><h3>EU AI Act and data protection</h3><p>Advising staff on EU AI Act questions and data protection when using AI, in the consultation hour and in training for state authorities.</p></div>
+      <div><span class="q">Working in English and German</span><h3>German native, English B2+</h3><p>First-author paper in English in <i>Remote Sensing</i> (MDPI, 2022). Courses in English for science and technology at TU Dresden (CEFR B2+).</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="governance">
+  <div class="wrap">
+    <span class="eyebrow">Governance</span>
+    <h2>Two roles under the EU AI Act. One fast service.</h2>
+    <p class="intro">Your advert names Communardo as both deployer and provider. This is how I would structure the governance work so that it speeds teams up instead of slowing them down.</p>
+    <div class="gov">
+      <article><span class="k">Deployer</span><h3>AI Usage Guideline</h3><p>Clear rules for staff using AI internally: which tools are approved, which data may go where, who to ask. The consultation hour format answers what the guideline cannot.</p></article>
+      <article><span class="k">Provider</span><h3>Transparency Charter</h3><p>What clients may expect when Communardo builds AI into their solutions: documentation, transparency obligations, human oversight. Agreed with delivery before it is promised to clients.</p></article>
+      <article><span class="k">Service</span><h3>Fast lane for approved tools</h3><p>A short, documented route from "I want to try this tool" to a decision, so the sanctioned path is the quickest one and shadow AI has no reason to exist.</p></article>
+    </div>
+    <p class="note">These are proposals for discussion, built on what your advert describes. I would shape them together with the Tech and AI Board.</p>
+  </div>
+</section>
+
+<section class="block" id="path">
+  <div class="wrap">
+    <span class="eyebrow">Path</span>
+    <h2>From water data to AI in daily work.</h2>
+    <p class="intro">The common thread is data. A specialist question becomes a tool that other people use. Often the result also works without AI, and that is fine.</p>
+    <div class="river">
+      <ol class="stations">
+        <li class="station now"><div class="what">
+          <h3>Sachbearbeiter Digitale Infrastruktur (Officer for Digital Infrastructure)</h3>
+          <div class="org">Digitalagentur Sachsen, Dresden · focus on AI use cases, prototypes and enablement</div>
+          <p>Finding AI use cases, building prototypes, selecting language models and bringing the results into the work of state authorities. AI consultation hour, training for state authorities, co-host of the PROMPTgenau podcast.</p>
+          <div class="tags"><span class="tag hot">LLMs</span><span class="tag hot">RAG</span><span class="tag hot">MCP</span><span class="tag hot">EU AI Act</span><span class="tag">Use-Case-Radar</span><span class="tag">Feasibility-Analyzer</span><span class="tag">fibre dashboard</span></div>
+        </div><div class="when">03/2022 – today</div></li>
+        <li class="station"><div class="what">
+          <h3>Referent, Saxony's river basin coordinator</h3>
+          <div class="org">Saxon State Ministry for Energy, Climate Protection, Environment and Agriculture, Dresden</div>
+          <p>Coordinating Saxony's contributions to the EU Water Framework Directive and the Floods Directive, preparing national and international committee meetings, representing the Free State.</p>
+          <div class="tags"><span class="tag">committees</span><span class="tag">EU directives</span></div>
+        </div><div class="when">09/2020 – 02/2022</div></li>
+        <li class="station"><div class="what">
+          <h3>Referent for event analysis, State Flood Centre</h3>
+          <div class="org">Saxon State Dam Administration, working for the State Office for Environment, Agriculture and Geology, Dresden</div>
+          <p>Data from the 2013 flood, a concept for using satellite, aircraft and drone data, a web-based participation portal, and a demo on Google Earth Engine that became the WaterMaskAnalyzer.</p>
+          <div class="tags"><span class="tag hot">Google Earth Engine</span><span class="tag hot">Sentinel</span><span class="tag">GIS</span><span class="tag">tendering</span></div>
+        </div><div class="when">03/2016 – 08/2020</div></li>
+        <li class="station"><div class="what">
+          <h3>Project engineer, innovation department</h3>
+          <div class="org">GIP Grundwasser-Ingenieurbau-Planung GmbH, Dresden</div>
+          <p>A funded project of the Saxon development bank on technologies for river treatment plants, using the "Braune Spree" as the example.</p>
+        </div><div class="when">12/2014 – 02/2016</div></li>
+        <li class="station"><div class="what">
+          <h3>B.Sc. and M.Sc. Water Management</h3>
+          <div class="org">Technische Universität Dresden · Master's grade 1.3</div>
+          <p>Hydroinformatics, groundwater modelling, river development.</p>
+        </div><div class="when">2008 – 2014</div></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="first-90-days">
+  <div class="wrap">
+    <span class="eyebrow">First 90 days</span>
+    <h2>How I would start the AI CoE.</h2>
+    <p class="intro">Built on your advert. Every step ends with something the Tech and AI Board can see.</p>
+    <div class="plan">
+      <div class="step"><span class="k">Days 1–30 · Listen</span><h3>Know the people and the tools</h3><ul><li>Meet the process owners in delivery and administration</li><li>Meet the volunteers who already carry the AI CoE</li><li>Take stock of the approved-tool landscape and the use case library</li></ul></div>
+      <div class="step"><span class="k">Days 31–60 · Choose</span><h3>One process, measured from day one</h3><ul><li>Rate open use cases by benefit and feasibility</li><li>Pick one core process with its owner and record the baseline</li><li>Check the AI Usage Guideline against deployer and provider duties</li></ul></div>
+      <div class="step"><span class="k">Days 61–90 · Show</span><h3>First result in front of the board</h3><ul><li>Pilot running, with before and after</li><li>Architecture decision for the AI Operating System, vendor-neutral</li><li>Plan for the next AI Spotlight series and the agent-build hackathon</li></ul></div>
+    </div>
+    <p class="note">A plan from the outside. It changes the day I learn how Communardo really works.</p>
+  </div>
+</section>
+
+<section class="docs" id="documents">
+  <div class="wrap">
+
+    <div class="doc-head" id="cover">
+      <div><span class="eyebrow">Document 1</span><h2>Cover letter</h2></div>
+      <button class="btn" type="button" data-print="cover">Print as PDF</button>
+    </div>
+    <article class="doc cover" id="doc-cover" aria-label="Cover letter">
+      <div class="name">Stephan Büttig</div>
+      <div class="contact"><span>Dresden</span><span>stephanbuettig@gmail.com</span><span>linkedin.com/in/stephan-büttig</span></div>
+      <div class="contact">M.Sc. Water Management (TU Dresden)</div>
+      <hr>
+      <div class="subject">Application: Head of AI Center of Excellence (m/f/d)</div>
+      <div class="dateline">Communardo GmbH · Dresden · 7 October 2026</div>
+      <p>Dear Communardo recruiting team,</p>
+      <p>You want the sanctioned path to be the fastest path for AI at Communardo. That is the work I have been doing since 2022 at the Digitalagentur Sachsen, the digital agency of the Free State of Saxony. I find use cases where AI takes work off people's desks, build the prototype and bring the result into the daily work of the authorities that use it.</p>
+      <p>I am a water management engineer (M.Sc., TU Dresden) and have been working since 2014. Before my current role I spent six years turning flood, low-water and satellite data into concepts and tools for the Saxon environmental administration, most recently as Saxony's river basin coordinator at the environment ministry.</p>
+      <ul class="ach">
+        <li><b>Adoption, end to end.</b> I run the AI consultation hour for staff, from everyday questions to the EU AI Act and data protection, and I train state authorities. A station-based course derives individual learning paths for working with language models from survey answers.</li>
+        <li><b>A use case library with a method behind it.</b> My Use-Case-Radar lets authorities rate AI ideas by benefit and feasibility. A Feasibility-Analyzer checks feasibility.</li>
+        <li><b>Hands-on and vendor-neutral.</b> I select language models and integrate the results into existing workflows. My tools run on different models. I work with RAG, MCP, n8n, vector databases and Claude Code.</li>
+        <li><b>Leading without formal authority.</b> As river basin coordinator I prepared national and international committee meetings across authorities and represented Saxony in several of them.</li>
+        <li><b>Work that others carry on.</b> I co-host PROMPTgenau, the AI podcast of the Digitalagentur Sachsen. My WaterMaskAnalyzer, published as first author in <i>Remote Sensing</i> in 2022, was developed further by the Saxon State Office for Environment, Agriculture and Geology in the Copernicus project BIGFE.</li>
+      </ul>
+      <p>In my first weeks I would meet the process owners in delivery and administration and the volunteers who already carry the AI CoE, take stock of the approved tools and the use case library, and choose one core process to rebuild around AI together with its owner. I would measure that pilot from the first day, so that the Tech and AI Board sees what actually changed.</p>
+      <p>I would welcome the chance to discuss how I would build the AI CoE in Dresden.</p>
+      <p class="sign">Kind regards<br>Stephan Büttig</p>
+    </article>
+
+  </div>
+</section>
+
+<footer>Stephan Büttig · Dresden · 7 October 2026</footer>
+
+<script>
+(function(){
+  document.querySelectorAll("[data-print]").forEach(function(b){
+    b.addEventListener("click",function(){document.body.setAttribute("data-print",b.getAttribute("data-print"));window.print();});
+  });
+  window.addEventListener("afterprint",function(){document.body.removeAttribute("data-print")});
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if(!reduce&&"IntersectionObserver" in window){
+    document.querySelectorAll(".hero .reveal").forEach(function(e,i){e.classList.add("pending");setTimeout(function(){e.classList.remove("pending")},200+i*140)});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}})},{threshold:.35});
+    document.querySelectorAll(".mission").forEach(function(r){io.observe(r)});
+  }else{document.querySelectorAll(".mission").forEach(function(r){r.classList.add("in")});}
+
+  /* Hero: Anfragen aus allen Richtungen laufen auf eine Tür zu und verlassen sie auf einem schnellen Pfad.
+     Ein Teil irrt langsam umher (Schatten-KI) und wird nach und nach von der Tür eingefangen. */
+  function scene(canvas,opts){
+    var ctx=canvas.getContext("2d"),W,H,dpr=Math.min(window.devicePixelRatio||1,2),parts=[],t=0;
+    function size(){
+      var r=opts.fixed||canvas.getBoundingClientRect();W=r.width;H=r.height;
+      canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+    function door(){return {x:W*(opts.doorX||.72),y:H*(opts.doorY||.5)}}
+    function spawn(p){
+      var d=door(),side=Math.random();
+      if(side<.35){p.x=Math.random()*W*.6;p.y=-10}else if(side<.7){p.x=Math.random()*W*.6;p.y=H+10}else{p.x=-10;p.y=Math.random()*H}
+      p.state="in";p.speed=1.6+Math.random()*1.6;p.wobble=Math.random()*6.28;p.trail=[];p.stray=Math.random()<.25;
+      return p;
+    }
+    function init(n){parts=[];var d=door();for(var i=0;i<n;i++){var p=spawn({});var k=Math.random()*.85;p.x+=(d.x-p.x)*k;p.y+=(d.y-p.y)*k;parts.push(p)}}
+    function step(p,dt){
+      var d=door();
+      if(p.state==="in"){
+        var dx=d.x-p.x,dy=d.y-p.y,dist=Math.hypot(dx,dy);
+        var sp=p.stray?p.speed*.3:p.speed;
+        p.wobble+=.04;
+        p.x+=dx/dist*sp*dt+Math.sin(p.wobble)*(p.stray?1.1:.35);
+        p.y+=dy/dist*sp*dt+Math.cos(p.wobble*1.3)*(p.stray?1.1:.35);
+        if(dist<18){p.state="out";p.vx=2.2;p.trail=[]}
+      }else{
+        p.vx*=1.035;p.x+=p.vx*dt;p.y+=(d.y-p.y)*.2;
+        if(p.x>W+20)spawn(p);
+      }
+      p.trail.push([p.x,p.y]);if(p.trail.length>(p.state==="out"?22:12))p.trail.shift();
+    }
+    function draw(){
+      if(!reduce)t+=1;
+      ctx.clearRect(0,0,W,H);
+      var g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,"#040040");g.addColorStop(1,"#0b0b5e");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      var d=door();
+      /* schneller Pfad */
+      var lg=ctx.createLinearGradient(d.x,0,W,0);lg.addColorStop(0,"rgba(124,196,255,.55)");lg.addColorStop(1,"rgba(124,196,255,0)");
+      ctx.strokeStyle=lg;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(W,d.y);ctx.stroke();
+      /* Teilchen */
+      for(var i=0;i<parts.length;i++){
+        var p=parts[i];if(!reduce)step(p,1);
+        var out=p.state==="out";
+        if(p.trail.length>1){ctx.strokeStyle=out?"rgba(213,237,255,.85)":(p.stray?"rgba(158,169,212,.25)":"rgba(124,196,255,.5)");ctx.lineWidth=out?1.6:1;ctx.beginPath();ctx.moveTo(p.trail[0][0],p.trail[0][1]);for(var k=1;k<p.trail.length;k++)ctx.lineTo(p.trail[k][0],p.trail[k][1]);ctx.stroke()}
+        ctx.fillStyle=out?"#ffffff":(p.stray?"rgba(158,169,212,.6)":"rgba(124,196,255,.95)");
+        ctx.beginPath();ctx.arc(p.x,p.y,out?2.6:2,0,6.28);ctx.fill();
+      }
+      /* Tür */
+      var pulse=(Math.sin(t*.05)+1)/2;
+      ctx.strokeStyle="rgba(227,6,19,"+(.35+pulse*.35)+")";ctx.lineWidth=2;ctx.beginPath();ctx.arc(d.x,d.y,18+pulse*10,0,6.28);ctx.stroke();
+      ctx.fillStyle="#e30613";ctx.beginPath();ctx.arc(d.x,d.y,7,0,6.28);ctx.fill();
+      ctx.strokeStyle="rgba(213,237,255,.5)";ctx.lineWidth=1;ctx.strokeRect(d.x-12,d.y-22,24,44);
+      if(!reduce&&!opts.static)requestAnimationFrame(draw);
+    }
+    size();init(opts.n||140);
+    if(opts.static){for(var s=0;s<260;s++)parts.forEach(function(p){step(p,1)});reduce=true;draw();return}
+    if(reduce){for(var s2=0;s2<200;s2++)parts.forEach(function(p){step(p,1)})}
+    window.addEventListener("resize",function(){size()});
+    draw();
+  }
+  scene(document.getElementById("door"),{n:220,doorX:.8});
+  
+  /* Fluss-Linie entlang der Stationen */
+  var river=document.querySelector(".river"),list=river.querySelector(".stations");
+  function drawRiver(){
+    var old=river.querySelector("svg.path");if(old)old.remove();
+    var dots=list.querySelectorAll(".what");if(dots.length<2)return;
+    var rb=river.getBoundingClientRect(),pts=[];
+    dots.forEach(function(el){var b=el.getBoundingClientRect();pts.push([b.left-rb.left+6,b.top-rb.top+16])});
+    var d="M"+pts[0][0]+" "+pts[0][1];
+    for(var i=1;i<pts.length;i++){var a=pts[i-1],b2=pts[i],m=(a[1]+b2[1])/2;d+=" C"+(a[0]-18)+" "+m+" "+(b2[0]+18)+" "+m+" "+b2[0]+" "+b2[1]}
+    var svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("class","path");svg.setAttribute("viewBox","0 0 "+rb.width+" "+rb.height);svg.setAttribute("preserveAspectRatio","none");
+    var path=document.createElementNS("http://www.w3.org/2000/svg","path");path.setAttribute("d",d);svg.appendChild(path);river.insertBefore(svg,list);
+    var len=path.getTotalLength();path.style.strokeDasharray=len;path.style.strokeDashoffset=reduce?0:len;
+    if(!reduce){var seen=new IntersectionObserver(function(e){if(e[0].isIntersecting){path.style.transition="stroke-dashoffset 2.2s ease";path.style.strokeDashoffset=0;seen.disconnect()}},{threshold:.15});seen.observe(river)}
+  }
+  drawRiver();window.addEventListener("resize",drawRiver);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawRiver);
+})();
+</script>
+</body>
+</html>
