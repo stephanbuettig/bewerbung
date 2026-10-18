@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Stephan Büttig · KI-Manager für clicks digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Mulish:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+
+/* C · Spotlight. Communardos wöchentlicher "AI Spotlight" als Bild: ein Lichtkegel wandert über ein dunkles Feld
+   aus Anwendungsfällen und holt sie ins Licht. Editorial, große Schrift, Navy mit warmweißem Licht. */
+:root{--bg:#14171c;--bg-2:#1b1f26;--fg:#f5f6f8;--muted:#9aa3ad;--line:rgba(245,246,248,.14);--sky:#f5f6f8;--lane:#ef5a28;--signal:#ffb088;--light:#ffd4c2;
+--paper:#fff;--paper-fg:#212529;--paper-muted:#6c757d;--paper-line:#dee2e6;--docs-bg:#f3f5f9;--docs-line:#dee2e6;--docs-accent:#ef5a28;
+--deck-bg:#14171c;--deck-fg:#f5f6f8;--deck-muted:#c9ced6;--deck-accent:#ef5a28;--deck-em:#ff8a5c;--deck-line:rgba(245,246,248,.2);--deck-wash:radial-gradient(ellipse at 70% 30%,rgba(239,90,40,.18),transparent 55%),linear-gradient(180deg,rgba(20,23,28,.55),rgba(20,23,28,.92));
+--display:"Space Grotesk","Segoe UI",Arial,sans-serif;--body:"Mulish","Segoe UI",Helvetica,Arial,sans-serif;--mono:"JetBrains Mono",Menlo,Consolas,monospace;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--lane)}h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.02}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--lane)}
+.bar{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(20,23,28,.82);border-bottom:1px solid var(--line)}
+.bar .wrap{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px;min-height:56px}
+.bar nav{display:flex;gap:16px;justify-content:center;white-space:nowrap;overflow:hidden}@media (max-width:1400px){.bar nav{display:none}}
+.bar nav a{color:var(--muted);text-decoration:none;font-size:14px}.bar nav a:hover{color:var(--fg)}
+.bar .cta{flex-wrap:nowrap;justify-content:flex-end}@media (max-width:760px){.bar .wrap{grid-template-columns:1fr;gap:8px;padding-block:8px}.bar .cta{flex-wrap:wrap;justify-content:flex-start}}
+.brand{font-family:var(--display);font-weight:800;letter-spacing:.02em;text-transform:uppercase;font-size:14px}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--lane);color:var(--lane);background:transparent;border-radius:999px;padding:8px 16px;font:600 14px var(--body);cursor:pointer;text-decoration:none}
+.btn:hover,.btn:focus-visible{background:var(--lane);color:var(--bg);outline:none}.btn.solid{background:var(--lane);color:var(--bg)}.btn.solid:hover{background:#fff}
+.langswitch{border-radius:999px}.langswitch button[aria-pressed="true"]{background:var(--lane);color:var(--bg)}
+.cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);cursor:pointer}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;z-index:1;padding-block:clamp(64px,12vw,150px) clamp(48px,8vw,96px);display:grid;gap:26px;pointer-events:none}
+.hero .wrap a,.hero .wrap button{pointer-events:auto}
+.hero h1{font-size:clamp(34px,6vw,96px);font-weight:900;line-height:.98;max-width:16ch;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:var(--lane)}
+.hero p.lead{font-size:clamp(18px,2.1vw,23px);max-width:54ch;margin:0;color:#d5d9e0}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px 22px;font-family:var(--mono);font-size:13px;color:var(--muted)}.hero .meta b{color:var(--fg);font-weight:500}
+.hero .hint{font:12px var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.reveal{opacity:1;transform:none;transition:opacity .8s ease,transform .8s ease}.js .reveal.pending{opacity:0;transform:translateY(18px)}
+section.block{padding-block:clamp(56px,8vw,100px);border-bottom:1px solid var(--line)}
+section.block h2{font-size:clamp(30px,4.6vw,56px);font-weight:900;margin-top:12px;max-width:20ch;letter-spacing:-.015em}
+.intro{max-width:62ch;color:#d5d9e0;margin:18px 0 0;font-size:18px}
+/* Spotlight-Sessions */
+.missions{display:grid;gap:14px;margin-top:40px;counter-reset:s}
+.mission{display:grid;grid-template-columns:90px minmax(0,1fr) minmax(0,1.3fr);gap:20px;align-items:start;padding:26px 0;border-top:1px solid var(--line);counter-increment:s;position:relative}
+.mission::before{content:"#" counter(s);font-family:var(--display);font-weight:900;font-size:44px;line-height:1;color:rgba(245,246,248,.12);transition:color .6s}
+.mission.in::before{color:var(--lane)}
+.mission:last-child{border-bottom:1px solid var(--line)}
+.mission .ask{font-family:var(--display);font-weight:700;font-size:22px;line-height:1.15}
+.mission .ask small{display:block;font:12px var(--mono);color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+.mission .door{display:none}
+.mission .have{color:#d5d9e0;min-width:0;font-size:16.5px}.mission .have b{color:var(--fg);background:linear-gradient(transparent 60%,rgba(239,90,40,.35) 60%)}
+@media (max-width:760px){.mission{grid-template-columns:1fr}.mission::before{font-size:28px}}
+.req{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px 32px;margin-top:40px}
+.req>div{display:grid;gap:6px;align-content:start;border-top:2px solid var(--lane);padding-top:14px}
+.req h3{font-size:19px;font-weight:700}.req p{margin:0;font-size:15.5px;color:#d5d9e0}.req .q{font:11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--lane)}
+.gov{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;margin-top:40px}
+.gov article{display:grid;gap:10px;padding:24px;border-radius:14px;background:radial-gradient(ellipse at top left,rgba(239,90,40,.14),rgba(239,90,40,.02));border:1px solid var(--line)}
+.gov .k{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lane)}.gov h3{font-size:22px;font-weight:700}.gov p{margin:0;font-size:15.5px;color:#d5d9e0}
+/* Programm */
+.river{position:relative;margin-top:40px}.river svg.path{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+.river svg.path path{fill:none;stroke:var(--lane);stroke-width:1.5;stroke-linecap:round;opacity:.8}
+.stations{list-style:none;margin:0;padding:0;display:grid;gap:30px;position:relative}
+.station{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start}
+.station .when{grid-column:1;grid-row:1;font-family:var(--mono);font-size:13px;color:var(--lane);padding-top:6px;white-space:nowrap}
+.station .what{grid-column:2;grid-row:1;position:relative;padding-left:28px}
+.station .what::before{content:"";position:absolute;left:0;top:10px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--lane)}
+.station.now .what::before{background:var(--light);border-color:var(--light);box-shadow:0 0 18px 4px rgba(239,90,40,.45)}
+.station h3{font-size:21px;font-weight:700}.station .org{color:var(--muted);font-size:14px;margin:2px 0 8px}.station p{margin:0;color:#d5d9e0;max-width:62ch}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.tag{font:12px var(--mono);border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--muted)}.tag.hot{border-color:rgba(239,90,40,.7);color:var(--lane)}
+@media (max-width:640px){.station{grid-template-columns:1fr;gap:4px}.station .when,.station .what{grid-column:1;grid-row:auto}}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:40px}
+.step{display:grid;gap:10px;align-content:start;padding:22px;border-radius:14px;background:rgba(245,246,248,.04);border:1px solid var(--line)}
+.step .k{font:500 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lane)}.step h3{font-size:22px;font-weight:700}
+.step ul{margin:0;padding-left:18px;color:#d5d9e0;font-size:15.5px}.step li{margin:4px 0}
+.note{margin-top:22px;font-size:14px;color:var(--muted);max-width:70ch}
+.docs .btn{border-radius:3px}
+@media (prefers-reduced-motion:reduce){.reveal,.mission::before{transition:none}.js .reveal.pending{opacity:1;transform:none}}
+
+.hero .wrap{padding-block:clamp(72px,13vw,170px) clamp(56px,9vw,110px)}
+.hero h1{font-weight:700;letter-spacing:-.02em;max-width:12ch}
+.hero p.lead{max-width:46ch;font-size:clamp(17px,1.9vw,20px)}
+.hero .meta{max-width:60ch}
+.mission .have b{background:none;color:var(--signal)}
+.docs .btn{border-radius:999px}
+@media (max-width:760px){.hero canvas{opacity:.45}}
+.gov{grid-template-columns:repeat(2,minmax(0,1fr))}.gov article{align-content:start}@media (max-width:760px){.gov{grid-template-columns:1fr}}
+@media print{#doc-cover{font-size:10pt;line-height:1.34}#doc-cover p{margin:5pt 0}#doc-cover .sign{margin-top:4pt}#doc-cover .name{font-size:18pt}#doc-cover ul.ach{margin:3pt 0}#doc-cover ul.ach li{margin:2pt 0}#doc-cover hr{margin:6pt 0}#doc-cover .subject{font-size:12pt}#doc-cover .contact{font-size:8.5pt}}
+
+html[lang="de"] .en{display:none!important}
+html[lang="en"] .de{display:none!important}
+.langswitch{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;font:500 12px var(--mono);letter-spacing:.08em}
+.langswitch button{background:transparent;border:0;color:var(--muted);padding:7px 10px;cursor:pointer;font:inherit}
+.langswitch button[aria-pressed="true"]{background:var(--sky);color:var(--bg)}
+
+
+.docs{padding-block:clamp(56px,8vw,96px);background:var(--docs-bg);color:var(--paper-fg);border-top:1px solid var(--docs-line)}
+.docs .eyebrow{color:var(--docs-accent)}
+.docs h2{color:var(--paper-fg)}
+.docs .btn{border-color:var(--paper-fg);color:var(--paper-fg)}
+.docs .btn:hover,.docs .btn:focus-visible{background:var(--paper-fg);color:#fff}
+.doc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;max-width:820px;margin:48px auto 0}
+.doc-head h2{font-size:clamp(26px,3.5vw,36px);font-weight:700;margin:0}
+.doc{background:var(--paper);color:var(--paper-fg);max-width:820px;margin:24px auto 0;padding:clamp(28px,5vw,64px);box-shadow:0 18px 50px rgba(4,4,64,.14);font-size:15px;line-height:1.5;border-top:4px solid var(--bg)}
+.doc .name{font-family:var(--display);font-size:30px;font-weight:700;line-height:1}
+.doc .contact{font-size:13px;color:var(--paper-muted);margin-top:8px}
+.doc .contact span+span::before{content:" · ";color:#aab0c8}
+.doc hr{border:0;border-top:1px solid var(--paper-line);margin:18px 0}
+.doc .subject{font-family:var(--display);font-weight:600;font-size:19px;margin-top:4px}
+.doc .dateline{font-size:13px;color:var(--paper-muted);margin-top:4px}
+.doc p{margin:12px 0;max-width:none;hyphens:auto;-webkit-hyphens:auto}
+.doc ul.ach li{hyphens:auto;-webkit-hyphens:auto}
+.doc ul.ach{padding-left:18px;margin:12px 0}
+.doc ul.ach li{margin:7px 0}
+.doc .sign{margin-top:22px}
+.doc h3{font-family:var(--display);font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-muted);margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--paper-line)}
+.cv{--cv-col:124px;--cv-gap:16px}
+.cv .job{display:grid;grid-template-columns:var(--cv-col) minmax(0,1fr);gap:var(--cv-gap);margin:14px 0}
+.cv .job .when{font-family:var(--mono);font-size:11.5px;color:var(--paper-muted);padding-top:3px;white-space:nowrap;letter-spacing:-.01em}
+.cv .job h4{margin:0;font-size:15px;font-weight:600;font-family:var(--body)}
+.cv .job .org{font-size:13px;color:var(--paper-muted);margin:2px 0 6px}
+.cv .job ul{padding-left:18px;margin:0}
+.cv .job li{margin:4px 0;font-size:14px}
+.cv .skills{display:grid;grid-template-columns:var(--cv-col) minmax(0,1fr);gap:6px var(--cv-gap);font-size:14px}
+.cv .skills b{font-weight:600;font-size:.92em;line-height:1.3}
+.cv .pubs{margin:0 0 0 calc(var(--cv-col) + var(--cv-gap));padding-left:18px}
+.cv .pubs li{font-size:13.5px;margin:5px 0}
+@media (max-width:640px){.cv .job,.cv .skills{grid-template-columns:1fr;gap:4px}.cv .pubs{margin-left:0}}
+footer{padding:40px 0 60px;color:var(--paper-muted);font-size:13px;text-align:center;background:var(--docs-bg)}
+.deckblatt{display:none}
+@media print{
+  @page deck{size:A4;margin:0}
+  body[data-print="all"] .deckblatt{display:block;page:deck;position:relative;width:210mm;height:297mm;overflow:hidden;background:var(--deck-bg);color:var(--deck-fg);break-after:page;page-break-after:always;-webkit-print-color-adjust:exact;print-color-adjust:exact;margin:0}
+  body[data-print="all"] .deckblatt canvas{position:absolute;inset:0;width:100%;height:100%}
+  body[data-print="all"] .deckblatt .dk{position:relative;height:100%;padding:16mm 16mm 18mm;display:grid;grid-template-rows:auto 1fr auto;gap:6mm;background:var(--deck-wash)}
+  .deckblatt .eyebrow{color:var(--deck-accent);font-size:8.5pt}
+  .deckblatt .dk-top{display:flex;justify-content:space-between;gap:8mm}
+  .deckblatt h1{font-size:30pt;font-weight:800;max-width:15ch;color:var(--deck-fg);margin:0}
+  .deckblatt h1 em{font-style:normal;color:var(--deck-em)}
+  .deckblatt .dk-mid p{font-size:11pt;max-width:70ch;color:var(--deck-muted);margin:5mm 0 0}
+  .deckblatt .dk-match{width:100%;border-collapse:collapse;margin-top:8mm;font-size:8.6pt;line-height:1.3}
+  .deckblatt .dk-match th{text-align:left;font:500 7.5pt var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--deck-accent);padding:0 3mm 2mm 0;border-bottom:1px solid var(--deck-line)}
+  .deckblatt .dk-match td{vertical-align:top;padding:2.4mm 4mm 2.4mm 0;border-bottom:1px solid var(--deck-line);color:var(--deck-muted)}
+  .deckblatt .dk-match td:first-child{font-family:var(--display);font-weight:600;color:var(--deck-fg);width:36%}
+  .deckblatt .dk-foot{display:flex;justify-content:space-between;gap:6mm;font-size:8pt;color:var(--deck-muted);flex-wrap:wrap}
+  .deckblatt .dk-foot b{color:var(--deck-fg);font-weight:500}
+  .deckblatt .dk-foot i{display:inline-block;width:2.2mm;height:2.2mm;border-radius:50%;background:var(--deck-accent);margin-right:2mm}
+  body[data-print="all"] #doc-cover{break-after:page;page-break-after:always}
+  body[data-print="all"] #doc-cv{break-before:page}
+  @page{size:A4;margin:13mm 16mm}
+  :root,html,body{background:#fff!important;color:#111;color-scheme:light!important}
+  body{font-size:11pt}
+  .bar,.hero,section.block,.doc-head,footer{display:none!important}
+  .docs{padding:0;background:#fff;border:0}
+  .doc{box-shadow:none;margin:0;padding:0;max-width:none;background:#fff;color:#111;border-top:0}
+  a{color:#111;text-decoration:none}
+  body[data-print="cover"] #doc-cv{display:none!important}
+  body[data-print="cv"] #doc-cover{display:none!important}
+  .doc{font-size:10.5pt;line-height:1.4}
+  .cv{font-size:10pt;line-height:1.36}
+  .doc p{orphans:3;widows:3;max-width:none}
+  .doc p,.doc li{hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:8 4 4}
+  .doc .name{font-size:22pt}
+  .doc .contact{font-size:9pt}
+  .doc hr{margin:10pt 0}
+  .doc .subject{font-size:13pt}
+  .doc ul.ach li{margin:4pt 0;break-inside:avoid}
+  .doc .sign{break-before:avoid}
+  .doc h3{break-after:avoid;page-break-after:avoid;margin:14pt 0 6pt;font-size:9pt}
+  .cv .summary{font-size:9.8pt;break-inside:avoid}
+  .cv .job{break-inside:auto;page-break-inside:auto;margin:8pt 0}
+  .cv .job li{break-inside:avoid;page-break-inside:avoid}
+  .cv .job h4,.cv .job .org{break-after:avoid;page-break-after:avoid}
+  .cv .job li:first-child{break-before:avoid}
+  .cv .job li{font-size:9.4pt;margin:1.5pt 0}
+  .cv .job h4{font-size:10.5pt}
+  .cv .job .org{font-size:9pt}
+  .cv .skills{font-size:9.4pt;gap:3pt var(--cv-gap)}
+  .cv .skills b,.cv .skills span{break-inside:avoid}
+  .cv .pubs{break-inside:avoid}
+  .cv .pubs li{font-size:9.3pt}
+  .cv h3+.job,.cv h3+.skills,.cv h3+.pubs{break-before:avoid}
+  .cv .pagebreak{break-before:auto}
+  .cv h3{break-after:avoid;page-break-after:avoid}
+}
+
+</style>
+</head>
+<body>
+<script>document.body.classList.add("js")</script>
+<header class="bar"><div class="wrap"><span class="brand">Stephan Büttig</span><nav aria-label="Sections"><a href="#governance"><span class="de" >Passpunkte</span></a><a href="#mission"><span class="de" >Aufgaben</span></a><a href="#path"><span class="de" >Weg</span></a><a href="#plan"><span class="de" >Erste 90 Tage</span></a><a href="#cover"><span class="de" >Anschreiben</span></a></nav><div class="cta"><button class="btn" type="button" data-print="cover"><span class="de" >Anschreiben PDF</span></button></div></div></header><section class="hero"><canvas id="net" aria-hidden="true"></canvas><div class="wrap">
+    <span class="de eyebrow reveal" >Bewerbung · KI-Manager (m/w/d) · clicks digital, Dresden</span><div class="reveal"><h1 class="de" >Ein click. Und der Prozess dahinter <em>läuft.</em></h1></div><p class="de lead reveal" >Euer Blog nennt AI-Agent-Protokolle einen strategischen Hebel, kein technisches Detail. Genau an dieser Stelle arbeite ich. Seit 2022 finde ich bei der Digitalagentur Sachsen Anwendungsfälle, in denen KI Beschäftigten Arbeit abnimmt, baue den Prototyp und bringe ihn in den Arbeitsalltag der Behörden. Für einen Online-Händler laufen mit n8n und einem PIM-System KI-gestützte Vorgänge zu Rechnungen und Kundenanfragen.</p>
+    <div class="meta reveal"><span class="de" >wohnt in <b>Dresden</b></span><span class="de" >KI-Use-Cases seit <b>2022</b></span><span class="de" >n8n, MCP, RAG, <b>Open-Source-Modelle</b></span><span class="de" >M. Sc., <b>TU Dresden</b></span></div>
+    <div class="cta reveal"><a class="btn solid" href="#cover"><span class="de" >Anschreiben lesen</span></a><a class="btn" href="#mission"><span class="de" >Eure Aufgaben, meine Belege</span></a></div><span class="de hint reveal" >Ein Klick ins Netz schickt einen Impuls durch alle Systeme</span></div></section><section class="block" id="governance"><div class="wrap"><span class="de eyebrow" >Passpunkte</span><h2 class="de" >Worüber ihr schreibt, damit arbeite ich selbst.</h2><p class="de intro" >Vier Stellen aus eurem Blog und euren Leistungsseiten, an denen meine Praxis direkt anschließt. Jeweils mit Quelle.</p><div class="gov"><article><span class="de k" >Blog, 6. August 2026</span><h3 class="de" >MCP, A2A, ACP</h3><p class="de" >Martin Heinemann nennt Agenten-Protokolle einen strategischen Hebel und empfiehlt Bestandsaufnahme, Priorisierung, Pilot und Skalierung mit Kennzahlen. Das Model Context Protocol gehört zu meinem Werkzeugkasten, neben n8n, RAG und Claude Code. Den Weg von der Bestandsaufnahme bis zum Pilot im Alltag gehe ich seit 2022 bei jedem Anwendungsfall der Digitalagentur.</p></article><article><span class="de k" >Blog, 12. August 2026</span><h3 class="de" >Chunking und Passage Design für GEO</h3><p class="de" >André Kremer erklärt, wie eine RAG-Pipeline Passagen aus einer Vektordatenbank abruft. Auf meinen eigenen Servern läuft eine Vektordatenbank, RAG kenne ich aus der Praxis. Wer die Abrufseite kennt, kann GEO-Empfehlungen mit dem Team prüfen und begründen.</p></article><article><span class="de k" >Schnittstellen, PIM/DAM, Marketing Automation</span><h3 class="de" >Wiederkehrende Workflows automatisieren</h3><p class="de" >Eure Seiten versprechen offene Schnittstellen zwischen PIM, Shop und ERP und automatisierte Workflows mit HubSpot, Zapier und Make. Für einen Online-Händler habe ich das mit n8n und einem PIM-System umgesetzt, mit KI-Schritten für Rechnungen und Kundenanfragen.</p></article><article><span class="de k" >KI-Agentur</span><h3 class="de" >Nur EU-konforme KI-Services</h3><p class="de" >Ihr sagt Kunden DSGVO-konforme KI-Systeme und ausschließlich EU-konforme KI-Services zu. Open-Source-Modelle wie Qwen binde ich über die KI-Plattform der GWDG an und vergleiche sie systematisch mit Cloud-Modellen. In der KI-Sprechstunde erkläre ich EU AI Act und Datenschutz so, dass sie im Alltag tragen.</p></article></div><p class="de note" >Quellen clicks.digital/blog, /schnittstellenprogrammierung, /pim-dam-beratung, /marketing-automation-agentur und /ki-agentur, gelesen am 10. Oktober 2026.</p></div></section><section class="block" id="mission"><div class="wrap"><span class="de eyebrow" >Eure Aufgaben</span><h2 class="de" >Sechs Aufgaben aus eurer Anzeige. Was ich heute schon tue.</h2><p class="de intro" >Links eure Anzeige, rechts mein Beleg aus dem Lebenslauf. Wo ich noch nicht bin, steht es dabei.</p><div class="missions"><div class="mission"><div class="ask"><span class="de" >Digital Process Automation steuern</span><small class="de" >von der Idee über die Umsetzung bis zur Wirkungsmessung</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Von der Idee in den Alltag</b><br><span class="de" >Seit 2022 finde ich bei der Digitalagentur Sachsen Anwendungsfälle, baue den Prototyp und bringe das Ergebnis in den Arbeitsalltag der Behörden. Für einen Online-Händler laufen mit n8n und einem PIM-System KI-gestützte Vorgänge zu Rechnungen, Kundenanfragen und dem übrigen Shop-Betrieb.</span></div></div><div class="mission"><div class="ask"><span class="de" >KI-Tools bewerten, testen, integrieren</span><small class="de" >für Marketing, Datenanalyse und Workflowoptimierung, mit DATA, SEO, SEA, Content und Development</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Testen, bevor ich empfehle</b><br><span class="de" >Auf eigenen Servern mit Docker, Ollama, Open WebUI und einer Vektordatenbank vergleiche ich Cloud-Modelle systematisch mit Open-Source-Modellen, bevor ein Werkzeug ein Modell bekommt. Beim Online-Händler betreue ich die Google-Ads-Kampagne mit Conversion-Tracking und betreibe Matomo selbst, GA4 und BigQuery kenne ich noch nicht aus der Praxis. Die Methode, ein Werkzeug gegen eine echte Aufgabe zu prüfen, bringe ich mit.</span></div></div><div class="mission"><div class="ask"><span class="de" >KI-Strategie weiterentwickeln</span><small class="de" >entlang der clicks-Ziele und der Kundenbedürfnisse</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Strategie aus bewerteten Fällen</b><br><span class="de" >Bei der Digitalagentur Sachsen habe ich den Use-Case-Radar gebaut, der KI-Ideen nach Nutzen und Machbarkeit bewertet, und den Feasibility-Analyzer für Machbarkeitsprüfungen. So entsteht eine KI-Strategie aus Fällen, die etwas bringen, statt aus Schlagworten.</span></div></div><div class="mission"><div class="ask"><span class="de" >Kolleginnen und Kollegen coachen</span><small class="de" >nachhaltiges, skalierbares Wissen im Unternehmen</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Sprechstunde, Schulung, Podcast</b><br><span class="de" >In der KI-Sprechstunde berate ich Beschäftigte zu Fragen aus dem Arbeitsalltag. Ich entwickle Schulungen für Landesbehörden und einen Stationenlauf, der aus Umfrageantworten individuelle Lernpfade ableitet. Als Co-Host des Podcasts PROMPTgenau erkläre ich Prompting und Modelle für ein breites Publikum.</span></div></div><div class="mission"><div class="ask"><span class="de" >Datenmodelle in Reports übersetzen</span><small class="de" >Entscheidungsgrundlagen für Kunden und Geschäftsleitung</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Daten sind mein Element</b><br><span class="de" >Das Glasfaser-Dashboard zeigt Kommunen den Stand des Breitbandausbaus als Entscheidungsgrundlage. Davor habe ich sechs Jahre Hochwasser-, Niedrigwasser- und Satellitendaten in der sächsischen Umweltverwaltung aufbereitet, ausgewertet und webbasiert dargestellt. Der WaterMaskAnalyzer berechnet aus Sentinel-Daten Zeitreihen von Wasserflächen, 2022 als Erstautor in Remote Sensing veröffentlicht.</span></div></div><div class="mission"><div class="ask"><span class="de" >Potenziale erkennen, Ideen umsetzen</span><small class="de" >mit Ownership und Neugier</small></div><div class="door"><svg viewBox="0 0 40 20"><path d="M2 10h30"/><circle cx="35" cy="10" r="4"/></svg></div><div class="have"><b class="de" >Baut selbst, statt nur zu beraten</b><br><span class="de" >Aus einer Fachfrage beim Landesamt wurde eine Demoanwendung auf Google Earth Engine, daraus der WaterMaskAnalyzer, den das Landesamt im Copernicus-Projekt BIGFE weiterentwickelt hat. Aus dem Verwaltungsalltag werden KI-Werkzeuge. Oft funktioniert das Ergebnis am Ende auch ohne KI, und das sage ich dann auch.</span></div></div></div><div class="req"><div><span class="de q" >Studium</span><h3 class="de" >Abgeschlossen, technisch, mit Daten</h3><p class="de" >M. Sc. Wasserwirtschaft, TU Dresden, Note 1,3, mit Hydroinformatik, Angewandter Umweltsystemanalyse und Modellierung. Kein Abschluss in Wirtschaftsinformatik oder Marketing Analytics, aber Daten und Modelle seit dem Studium.</p></div><div><span class="de q" >KI-Tools und Technologien</span><h3 class="de" >Seit 2022 im Alltag</h3><p class="de" >Large Language Models, RAG, MCP, Prompt Engineering, n8n, Vektordatenbanken, Claude Code und OpenAI Codex. In einer Agentur habe ich noch nicht gearbeitet. Online-Marketing kenne ich aus dem Shop-Betrieb des Online-Händlers, mit Google Ads, Merchant Center, Matomo und einem GEO-Audit.</p></div><div><span class="de q" >Daten</span><h3 class="de" >Analyse, Visualisierung, Ableitung</h3><p class="de" >Python für Datenaufbereitung und Automatisierung, GIS und Google Earth Engine, Dashboards für Kommunen. Beim Landesamt Konzepte für die Erfassung von Hochwasserdaten und die Nutzung von Fernerkundungsdaten in Fachverfahren.</p></div><div><span class="de q" >Nice to have</span><h3 class="de" >Datenschutz, Ethik, Regulatorik</h3><p class="de" >EU AI Act und Datenschutz beim KI-Einsatz sind Teil jeder KI-Sprechstunde. Die Fragen kommen aus dem Alltag und müssen in der Lösung beantwortet sein, nicht in einer Fußnote.</p></div></div></div></section><section class="block" id="path"><div class="wrap"><span class="de eyebrow" >Weg</span><h2 class="de" >Von Wasserdaten zu KI im Arbeitsalltag.</h2><p class="de intro" >Der rote Faden sind Daten. Aus einer Fachfrage wird ein Werkzeug, das andere nutzen. Oft funktioniert das Ergebnis auch ohne KI, und das ist in Ordnung.</p><div class="river"><ol class="stations"><li class="station now"><div class="de when" >03/2022 – heute</div><div class="what"><h3 class="de" >Sachbearbeiter Digitale Infrastruktur, Schwerpunkt KI-Use-Cases, Prototypen und Enablement</h3><div class="de org" >Digitalagentur Sachsen (DiAS), Dresden</div><p class="de" >Potenziale für KI erkennen, Prototyp bauen, Ergebnis in den Alltag der Behörden bringen. Use-Case-Radar, Feasibility-Analyzer, Glasfaser-Dashboard als Entscheidungsgrundlagen. KI-Tools und Sprachmodelle bewerten und testen. KI-Sprechstunde zu EU AI Act und Datenschutz, Schulungen, Stationenlauf mit Lernpfaden, Podcast PROMPTgenau.</p><div class="tags"><span class="tag hot">Use-Cases</span><span class="tag hot">Prototypen</span><span class="tag hot">KI-Tools</span><span class="tag hot">Modellauswahl</span><span class="tag hot">Coaching</span><span class="tag hot">Schulungen</span><span class="tag hot">Dashboards</span><span class="tag">EU AI Act</span></div></div></li><li class="station"><div class="de when" >09/2020 – 02/2022</div><div class="what"><h3 class="de" >Referent, sächsischer Flussgebietskoordinator</h3><div class="de org" >Sächsisches Staatsministerium für Energie, Klimaschutz, Umwelt und Landwirtschaft, Referat 44</div><p class="de" >Fachliche Grundsatzangelegenheiten der Gewässerbewirtschaftung, behördenübergreifende Vorbereitung nationaler und internationaler Gremien, Koordinierung der sächsischen Beiträge zur Wasserrahmenrichtlinie und Hochwasserrisikomanagement-Richtlinie.</p><div class="tags"><span class="tag hot">Koordination</span><span class="tag">Gremien</span><span class="tag">Entscheidungsgrundlagen</span></div></div></li><li class="station"><div class="de when" >03/2016 – 08/2020</div><div class="what"><h3 class="de" >Referent für Ereignisanalyse (Landeshochwasserzentrum, Gewässerkunde)</h3><div class="de org" >Landestalsperrenverwaltung, tätig für das LfULG, Dresden</div><p class="de" >Hochwasser- und Niedrigwasserdaten aufbereitet und ausgewertet, webbasiertes Beteiligungsportal, Konzept für Fernerkundungsdaten in Fachverfahren, Demoanwendung auf Google Earth Engine (später WaterMaskAnalyzer), Ausschreibung und Vergabe von Projektleistungen.</p><div class="tags"><span class="tag hot">Datenanalyse</span><span class="tag hot">Google Earth Engine</span><span class="tag">GIS</span><span class="tag">Webportal</span></div></div></li><li class="station"><div class="de when" >12/2014 – 02/2016</div><div class="what"><h3 class="de" >Projektingenieur in der Innovationsabteilung</h3><div class="de org" >GIP Grundwasser-Ingenieurbau-Planung GmbH, Dresden</div><p class="de" >Förderprojekt der Sächsischen Aufbaubank zur Weiterentwicklung von Technologien für Flusskläranlagen am Beispiel der „Braunen Spree“.</p><div class="tags"><span class="tag">Förderprojekt</span><span class="tag">Innovation</span></div></div></li><li class="station"><div class="de when" >2008 – 2014</div><div class="what"><h3 class="de" >B. Sc. und M. Sc. Wasserwirtschaft</h3><div class="de org" >Technische Universität Dresden</div><p class="de" >Master mit 1,3; Schwerpunkte Gewässerentwicklung, Naturnaher Wasserbau, Grundwasserbewirtschaftung mit Computermodellen; Hydroinformatik.</p><div class="tags"><span class="tag">Hydroinformatik</span><span class="tag">Modellierung</span></div></div></li></ol></div></div></section><section class="block" id="plan"><div class="wrap"><span class="de eyebrow" >Erste 90 Tage</span><h2 class="de" >So würde ich anfangen.</h2><p class="de intro" >Aufgebaut auf eurer Anzeige und dem Vorgehen aus eurem Blog. Jeder Schritt endet mit etwas, das Teams und Geschäftsleitung sehen können.</p><div class="plan"><div class="step"><span class="de k" >Tag 1–30 · Bestand</span><h3 class="de" >Systeme, Abläufe, Regeln</h3><ul><li class="de" >Mit jedem Team erheben, welche KI-Tools heute laufen und welche Abläufe viel Wiederholung haben</li><li class="de" >CRM, PIM, Shop, Analytics und Content-Werkzeuge als Datenquellen aufnehmen, Schnittstellen notieren</li><li class="de" >Datenschutz-Rahmen für Kundendaten und KI-Dienste klären, damit spätere Prototypen nicht daran scheitern</li></ul></div><div class="step"><span class="de k" >Tag 31–60 · Ein Prozess</span><h3 class="de" >Erster Pilot mit n8n und MCP</h3><ul><li class="de" >Einen Prozess mit dem betroffenen Team wählen, Ausgangslage messen (Zeit je Vorgang, Fehlerquote), Ziel festhalten</li><li class="de" >Prototyp mit n8n, MCP-Anbindung und passendem Sprachmodell bauen, im echten Ablauf testen, Modelle gegeneinander prüfen</li><li class="de" >KI-Sprechstunde als festes Format starten, offene Fragen aus den Teams sammeln</li></ul></div><div class="step"><span class="de k" >Tag 61–90 · Wirkung</span><h3 class="de" >Pilot im Alltag, Report, nächste Fälle</h3><ul><li class="de" >Pilot im Alltag mit Vorher-nachher-Messung und Report an die Geschäftsleitung</li><li class="de" >Zweiter und dritter Fall aus dem Use-Case-Radar starten, erste Schulung je Team mit Prompt-Standards</li><li class="de" >KI-Strategie fortschreiben, was bleibt, was kommt, was gemessen wird</li></ul></div></div><p class="de note" >Ein Plan von außen. Er ändert sich an dem Tag, an dem ich erfahre, wie clicks wirklich arbeitet.</p></div></section><section class="docs" id="documents"><div class="wrap">
+    <div class="doc-head" id="cover"><div><span class="de eyebrow" >Dokument 1</span><h2 class="de" >Anschreiben</h2></div><button class="btn" type="button" data-print="cover"><span class="de" >Als PDF drucken</span></button></div>
+    <article class="doc cover" id="doc-cover">
+      <div class="name">Stephan Büttig</div>
+      <div class="contact"><span>Dresden</span><span>linkedin.com/in/stephan-büttig</span></div>
+      <div class="contact"><span class="de" >M. Sc. Wasserwirtschaft (TU Dresden)</span></div>
+      <hr>
+      <div class="de subject" >Bewerbung als KI-Manager (m/w/d), Standort Dresden</div>
+      <div class="de dateline" >clicks digital GmbH · Webergasse 1, 01067 Dresden · 18. Oktober 2026</div>
+      <p class="de" >Liebes clicks-Team,</p>
+      <p class="de" >in eurem Blog steht seit August, dass AI-Agent-Protokolle 2026 kein technisches Detail mehr sind, sondern ein strategischer Hebel. Genau an dieser Stelle arbeite ich. Seit 2022 finde ich bei der Digitalagentur Sachsen Anwendungsfälle, in denen KI Beschäftigten Arbeit abnimmt, baue den Prototyp und bringe ihn in den Arbeitsalltag. Ihr sucht jemanden, der Digital Process Automation von der Idee bis zur Wirkungsmessung steuert. Darum bewerbe ich mich bei euch.</p>
+      <p class="de" >Ich bin Ingenieur für Wasserwirtschaft (M. Sc., TU Dresden) und seit 2014 im Beruf. Sechs Jahre davon habe ich mit Hochwasser-, Niedrigwasser- und Satellitendaten in der sächsischen Umweltverwaltung gearbeitet. Daten in Werkzeuge zu verwandeln, die andere nutzen, ist mein roter Faden, vom WaterMaskAnalyzer auf Google Earth Engine bis zu den KI-Werkzeugen der Digitalagentur. Was ich für eure Aufgaben mitbringe, in Kürze.</p>
+      <ul class="ach"><li class="de" ><b>Digital Process Automation</b><br>Für einen Online-Händler laufen mit n8n und einem PIM-System KI-gestützte Vorgänge zu Rechnungen, Kundenanfragen und dem übrigen Shop-Betrieb. Bei der Digitalagentur bringe ich Werkzeuge vom Prototyp in den Arbeitsalltag der Behörden.</li><li class="de" ><b>KI-Tools bewerten und integrieren</b><br>Auf eigenen Servern laufen n8n, Ollama, Open WebUI und eine Vektordatenbank. Open-Source-Modelle wie Qwen binde ich über die KI-Plattform der GWDG an, vergleiche sie systematisch mit Cloud-Modellen und wähle je Aufgabe das passende aus, passend zu eurem Versprechen, nur EU-konforme KI-Dienste einzusetzen.</li><li class="de" ><b>KI-Strategie aus bewerteten Fällen</b><br>Mit dem Use-Case-Radar bewerte ich KI-Ideen nach Nutzen und Machbarkeit, mit dem Feasibility-Analyzer prüfe ich, ob ein Vorhaben trägt.</li><li class="de" ><b>Coaching, das bleibt</b><br>KI-Sprechstunde, Schulungen für Landesbehörden, ein Stationenlauf mit individuellen Lernpfaden und der Podcast PROMPTgenau, den ich als Co-Host mitgestalte.</li><li class="de" ><b>Daten zu Entscheidungsgrundlagen</b><br>Glasfaser-Dashboard für Kommunen, sechs Jahre Hochwasser- und Satellitendaten in der sächsischen Umweltverwaltung, der WaterMaskAnalyzer als veröffentlichtes Werkzeug.</li></ul>
+      <p class="de" >Was ich noch nicht habe, sage ich offen. In einer Agentur habe ich bisher nicht gearbeitet, GA4 und BigQuery kenne ich nicht aus der Praxis. Online-Marketing kenne ich aus dem Shop-Betrieb des Online-Händlers, mit Google Ads, Merchant Center, selbst betriebenem Matomo und einem GEO-Audit der Shop-Seite. Aus vier Jahren weiß ich außerdem, dass ein Werkzeug erst zählt, wenn das Team es im Alltag nutzt, und dass Datenschutz und EU AI Act in die Lösung gehören, nicht in eine Fußnote.</p>
+      
+      <p class="de" >Als Arbeitsprobe liegt ein Agent-Readiness-Check bei, für den ich euren Audit nachgebaut und auf clicks.digital angewendet habe. Gern zeige ich euch im Gespräch ein Werkzeug der Digitalagentur und skizziere, wie ich den ersten Prozess bei euch mit n8n und MCP von der Idee bis zur gemessenen Wirkung angehen würde.</p>
+      <p class="de sign" >Mit freundlichen Grüßen<br>Stephan Büttig</p>
+    </article></div></section><footer>Stephan Büttig · Dresden · <span class="de" >11. Oktober 2026</span></footer>
+<script>
+
+(function(){
+  var root=document.documentElement,titles={de:'Stephan Büttig · KI-Manager für clicks digital',en:'Stephan Büttig · KI-Manager für clicks digital'};
+  function setLang(l){root.lang=l;document.title=titles[l];document.querySelectorAll(".langswitch button").forEach(function(x){x.setAttribute("aria-pressed",String(x.dataset.lang===l))});try{history.replaceState(null,"","#"+l)}catch(e){}}
+  var want=(location.hash.replace("#","")||"");if(want!=="de"&&want!=="en")want="de";
+  setLang(want);
+  document.querySelectorAll(".langswitch button").forEach(function(x){x.addEventListener("click",function(){setLang(x.dataset.lang)})});
+  window.addEventListener("hashchange",function(){var h=location.hash.replace("#","");if(h==="de"||h==="en")setLang(h)});
+  document.querySelectorAll("[data-print]").forEach(function(x){x.addEventListener("click",function(){document.body.setAttribute("data-print",x.getAttribute("data-print"));window.print()})});
+  window.addEventListener("afterprint",function(){document.body.removeAttribute("data-print")});
+})();
+
+(function(){
+
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if(!reduce&&"IntersectionObserver" in window){
+    document.querySelectorAll(".hero .reveal").forEach(function(e,i){e.classList.add("pending");setTimeout(function(){e.classList.remove("pending")},200+i*140)});
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}})},{threshold:.3});
+    document.querySelectorAll(".mission,.step,.gov article").forEach(function(r){io.observe(r)});
+  }else{document.querySelectorAll(".mission,.step,.gov article").forEach(function(r){r.classList.add("in")});}
+
+
+  var labels=["CRM", "PIM", "Shop", "Analytics", "Content", "SEA"],hubLabel="MCP";
+  function net(canvas,opts){
+    if(!canvas)return;var ctx=canvas.getContext("2d"),W,H,dpr=Math.min(window.devicePixelRatio||1,2),nodes=[],packets=[],pulses=[],t=0,hub={x:0,y:0},red=reduce;
+    function size(){var r=opts.fixed||canvas.getBoundingClientRect();W=r.width;H=r.height;canvas.width=W*dpr;canvas.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+      var narrow=W<760;hub.x=W*(narrow?.5:(opts.hx||.81));hub.y=H*(narrow?.965:(opts.hy||.5));var rx=opts.rx||(narrow?W*.34:Math.min(W*.16,200)),ry=opts.ry||(narrow?H*.07:Math.min(H*.3,190));nodes=[];
+      for(var i=0;i<labels.length;i++){var a=-Math.PI/2+i*(2*Math.PI/labels.length);nodes.push({x:hub.x+Math.cos(a)*rx,y:hub.y+Math.sin(a)*ry,l:labels[i],lit:0})}}
+    function spawn(i,back){packets.push({n:i,t:0,back:!!back,sp:.012+Math.random()*.01})}
+    function burst(x,y){pulses.push({x:x,y:y,r:0,a:1});for(var i=0;i<nodes.length;i++)spawn(i,false)}
+    function step(){t++;if(t%55===0)spawn(Math.floor(Math.random()*nodes.length),Math.random()<.5);
+      for(var i=packets.length-1;i>=0;i--){var p=packets[i];p.t+=p.sp;if(p.t>=1){nodes[p.n].lit=1;packets.splice(i,1);if(!p.back&&Math.random()<.6)spawn(p.n,true)}}
+      for(var k=pulses.length-1;k>=0;k--){var u=pulses[k];u.r+=5;u.a-=.014;if(u.a<=0)pulses.splice(k,1)}
+      for(var j=0;j<nodes.length;j++)nodes[j].lit*=.965}
+    function draw(){ctx.clearRect(0,0,W,H);var g=ctx.createLinearGradient(0,0,W,H);g.addColorStop(0,"#14171c");g.addColorStop(1,"#1b1f26");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+      ctx.strokeStyle="rgba(245,246,248,.07)";ctx.lineWidth=1;for(var x=0;x<W;x+=48){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke()}for(var y=0;y<H;y+=48){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke()}
+      for(var i=0;i<nodes.length;i++){var n=nodes[i];ctx.strokeStyle="rgba(245,246,248,"+(.12+n.lit*.5)+")";ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(hub.x,hub.y);ctx.lineTo(n.x,n.y);ctx.stroke()}
+      for(var k=0;k<pulses.length;k++){var u=pulses[k];ctx.strokeStyle="rgba(239,90,40,"+u.a*.7+")";ctx.lineWidth=2;ctx.beginPath();ctx.arc(u.x,u.y,u.r,0,6.28);ctx.stroke()}
+      for(var q=0;q<packets.length;q++){var p=packets[q],n=nodes[p.n],e=p.t<.5?2*p.t*p.t:-1+(4-2*p.t)*p.t,ax=p.back?n.x:hub.x,ay=p.back?n.y:hub.y,bx=p.back?hub.x:n.x,by=p.back?hub.y:n.y,px=ax+(bx-ax)*e,py=ay+(by-ay)*e;
+        ctx.fillStyle=p.back?"#ffb088":"#ef5a28";ctx.beginPath();ctx.arc(px,py,3.2,0,6.28);ctx.fill();ctx.strokeStyle="rgba(239,90,40,.35)";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(ax+(bx-ax)*Math.max(0,e-.08),ay+(by-ay)*Math.max(0,e-.08));ctx.lineTo(px,py);ctx.stroke()}
+      ctx.font="600 12px 'Mulish','Segoe UI',sans-serif";ctx.textAlign="center";ctx.textBaseline="middle";
+      for(var m=0;m<nodes.length;m++){var d=nodes[m];ctx.fillStyle="#14171c";ctx.beginPath();ctx.arc(d.x,d.y,22,0,6.28);ctx.fill();ctx.strokeStyle="rgba(239,90,40,"+(.45+d.lit*.55)+")";ctx.lineWidth=1.5+d.lit*1.5;ctx.stroke();ctx.fillStyle="rgba(245,246,248,"+(.75+d.lit*.25)+")";ctx.fillText(d.l,d.x,d.y)}
+      var pulse=(Math.sin(t*.06)+1)/2;ctx.fillStyle="#ef5a28";ctx.beginPath();ctx.arc(hub.x,hub.y,30+pulse*2,0,6.28);ctx.fill();ctx.strokeStyle="rgba(239,90,40,"+(.25+pulse*.3)+")";ctx.lineWidth=2;ctx.beginPath();ctx.arc(hub.x,hub.y,44+pulse*8,0,6.28);ctx.stroke();
+      ctx.fillStyle="#14171c";ctx.font="700 13px 'JetBrains Mono',Menlo,monospace";ctx.fillText(hubLabel,hub.x,hub.y);
+      if(!red&&!opts.fixed){step();requestAnimationFrame(draw)}}
+    size();
+    if(opts.fixed||red){for(var s=0;s<160;s++)step();pulses.push({x:hub.x,y:hub.y,r:70,a:.5});draw();return}
+    window.addEventListener("resize",size);
+    var hero=canvas.parentNode;hero.addEventListener("pointerdown",function(e){var r=canvas.getBoundingClientRect();burst(e.clientX-r.left,e.clientY-r.top)});
+    setTimeout(function(){burst(hub.x,hub.y)},900);draw();
+  }
+  net(document.getElementById("net"),{});
+  net(document.getElementById("net-print"),{fixed:{width:794,height:1123},hx:.5,hy:.74,rx:250,ry:118});
+
+
+  var river=document.querySelector(".river"),list=river&&river.querySelector(".stations");
+  function drawRiver(){
+    if(!river)return;var old=river.querySelector("svg.path");if(old)old.remove();
+    var dots=list.querySelectorAll(".what");if(dots.length<2)return;
+    var rb=river.getBoundingClientRect(),pts=[];
+    dots.forEach(function(el){var bx=el.getBoundingClientRect();pts.push([bx.left-rb.left+6,bx.top-rb.top+16])});
+    var d="M"+pts[0][0]+" "+pts[0][1];
+    for(var i=1;i<pts.length;i++){var a=pts[i-1],b2=pts[i],m=(a[1]+b2[1])/2;d+=" C"+(a[0]-18)+" "+m+" "+(b2[0]+18)+" "+m+" "+b2[0]+" "+b2[1]}
+    var svg=document.createElementNS("http://www.w3.org/2000/svg","svg");svg.setAttribute("class","path");svg.setAttribute("viewBox","0 0 "+rb.width+" "+rb.height);svg.setAttribute("preserveAspectRatio","none");
+    var path=document.createElementNS("http://www.w3.org/2000/svg","path");path.setAttribute("d",d);svg.appendChild(path);river.insertBefore(svg,list);
+    var len=path.getTotalLength();path.style.strokeDasharray=len;path.style.strokeDashoffset=reduce?0:len;
+    if(!reduce){var seen=new IntersectionObserver(function(e){if(e[0].isIntersecting){path.style.transition="stroke-dashoffset 2.2s ease";path.style.strokeDashoffset=0;seen.disconnect()}},{threshold:.15});seen.observe(river)}
+  }
+  drawRiver();window.addEventListener("resize",drawRiver);document.querySelectorAll(".langswitch button").forEach(function(x){x.addEventListener("click",function(){setTimeout(drawRiver,50)})});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(drawRiver);
+
+})();
+</script>
+</body>
+</html>
